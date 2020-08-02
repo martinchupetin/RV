@@ -1,0 +1,215 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Geologia</title>
+    <meta name="description" content="Geologia">
+      <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+      <script src="scripts/aframe-particle-system.min.js"></script>
+      <script>
+        AFRAME.registerComponent('cursor-listener',{
+            init: function(){
+                    var newcolor="green";
+                    this.el.addEventListener("mouseenter",function(e){
+                        console.log(e.detail.intersection.point);
+                        this.setAttribute('material','color',newcolor);
+                        
+                    });
+                    this.el.addEventListener("mouseleave",function(e){
+                        this.setAttribute('material','color',"yellow");                       
+                    });
+
+            }                         
+        });
+      </script>
+  </head>
+  <body>    
+    <a-scene>
+  <!--  <a-entity camera wasd-controls="acceleration:100" position="0 1.8 0" look-controls>
+     <a-entity cursor="fuse:true;fuseTimeout: 2000"
+        position="0 0 -1"
+        geometry="primitive:ring;radiusInner:0.03;radiusOuter:0.04"
+        material="color:black">         
+     </a-entity> 
+    </a-entity>-->
+     <a-assets>
+          <img id="cubes-thumb" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/thumb-cubes.jpg">
+           <img id="montana-normal" src="montana-normal1.png">
+           <img id="brick" src="assets/Texturas/brick/brick.jpg">
+           <img id="brick-normal" src="assets/Texturas/brick/brick-NormalMap.png">
+           <a-asset-item id="roca" src="3D/roca/scene.gltf"></a-asset-item>
+           <a-asset-item id="planta" src="3D/plantas/scene.gltf"></a-asset-item>
+           <a-asset-item id="ciudad" src="3D/ciudad-apocaliptica/scene.gltf">
+           </a-asset-item>    
+         <!-- <audio autoplay id="neigh" src="tema.mp3" position="5 5 -5" ></audio> -->
+      </a-assets>
+    <!-- <a-entity light="intensity: 0.6; castShadow: true" position="-1.90196 2.2117 1.61292" data-aframe-default-light="" aframe-injected=""></a-entity>-->
+    <a-entity position="0 2.25 -15" particle-system="preset: snow"></a-entity>
+   <a-box
+       src="assets/montana.jpg"
+       repeat="1 1" 
+       normal-map="#montana-normal"
+       normal-texture-repeat="1 1"
+       normal-scale="1 -1"
+       height="2"
+       width="4"
+       depth="0.2"
+       side="double"
+       position="0 1 -7"
+       rotation="90 0 0"
+       scale="-1 1 2">
+       <a-circle
+            color="blue"
+            side="double"
+            position="2 0 0"  
+            rotation="90 0 0"
+            
+        >           
+       </a-circle>
+     </a-box>
+<a-circle
+       color="yellow"
+       side="double"
+       position="-2 1 -8.01"   
+       scale="2 2 1"
+    >
+        
+    </a-circle>
+  <!--  <a-plane
+      color="grey"
+      width="15"
+      height="15"
+      rotation="-90 0 0"        
+    >        
+    </a-plane> -->
+   
+   <!-- <a-entity
+        gltf-model="#planta"
+        position="0 -300 0"  
+              
+    >
+    </a-entity>-->
+   <!-- <a-box cursor-listener
+        position="2 1 -4"
+        color="tomato"
+        depth="0.5">
+    </a-box>-->
+    <a-box
+         color="#FFFFFF"
+         src="assets/Texturas/brick/brick.jpg"
+         repeat="1 1"
+         normal-map="#brick-normal"
+         normal-texture-repeat="1 1"
+         normal-scale="1 -1"
+         roughness="0.5"     
+         width="4"
+         height="4"
+         depth="4"
+         position="-8 1.5 -4" 
+        scale="1 1 1"
+       
+    >        
+    </a-box>
+    
+    <a-box
+          material="color: #ffffff;
+          src: #brick;
+          repeat: 1 1;
+          normal-map: #brick-normal;
+          normal-texture-map: 2 2;
+          normal-scale: 1 -1;
+          roughness: 0.5"    
+          width="4" height="4" depth="4"
+          position="-12 1.5 -4"
+          scale="-1 1 1"
+    >        
+    </a-box>
+  <!--  <a-cylinder
+        color="red"
+        position="0 1 0"
+        heigth="2"
+        radius="2"
+        segments-radial="6"
+        open-ended="true"
+        side="double"
+        rotation="0 -90 90"
+        scale="2 2 2"
+    >        
+    </a-cylinder>-->
+    <!--<a-sphere 
+          material="src: #brick; opacity:0.5"
+          scale="1 1 -1"
+          position="-2 2 2"
+          ></a-sphere>-->
+       <a-image
+          src="assets/planet.jpg"
+          position="0 1.5 -3"
+          width="1"
+          height="0.75"
+          scale="3 3 1"
+          >
+           
+       </a-image>   
+       <a-curvedimage
+          src="assets/planet.jpg"          
+          theta-length="90"
+          theta-start="135"
+          radius="0.707"
+          height="0.833"
+          position="0 1.5 0"
+          scale="3 3 3"
+          >
+           
+       </a-curvedimage>
+       <a-curvedimage
+          src="assets/planet.jpg"          
+          theta-length="50"
+          theta-start="90"
+          radius="0.5"
+          height="0.327"
+          position="0 1.5 0"
+          scale="3 3 3"
+          >
+           
+       </a-curvedimage>
+        <a-curvedimage
+          src="assets/planet.jpg"          
+          theta-length="50"
+          theta-start="155"
+          radius="0.5"
+          height="0.327"
+          position="0 1.5 0"
+          scale="3 3 3"
+          >
+           
+       </a-curvedimage>
+       <a-curvedimage
+          src="assets/planet.jpg"          
+          theta-length="50"
+          theta-start="220"
+          radius="0.5"
+          height="0.327"
+          position="0 1.5 0"
+          scale="3 3 3"
+          >
+           
+       </a-curvedimage>
+       <a-box
+          color="red"
+          opacity="0.5"
+          width="3"
+          height="0.1"
+          depth="3"
+          position="0 1.5 -1.5"
+          >
+           
+       </a-box>
+    <!--<a-entity class="link"  geometry="primitive: plane; height: 1; width: 1"
+          material="shader: flat; src: #cubes-thumb" position="0 3 0"></a-entity>-->
+   <!--<a-entity data-brackets-id="200" light="intensity: 0.81; castShadow: true; penumbra: 0.52; angle: 30; color: #f8f7f2; distance: 2.72" position="0.42581 2.69727 -2.64808" data-aframe-default-light="" aframe-injected="" rotation="-90 0 0"></a-entity>-->
+    </a-scene>
+
+  </body>
+ 
+</html>
+

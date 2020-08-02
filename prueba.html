@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Geologia</title>
+    <meta name="description" content="Geologia">
+      <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  </head>
+  <body>    
+    <a-scene>
+
+     <a-assets>
+        <img id="cielo" src="assets/cielo.png">
+        <a-asset-item id="terremoto" src="3d/ground_02/scene.gltf"></a-asset-item>
+      
+     </a-assets>
+    <a-sky color="black"></a-sky>
+    <a-entity gltf-model="#terremoto" scale="10 10 10" rotation="0 270 0" position="-22 1 -55">   <a-cone color="red" position="0 1 -2.5"></a-cone>     
+    </a-entity>
+    <a-entity position="0 10 -10" rotation="0 0 0">
+        <a-camera zoom="1" fov="80" spectator="true"></a-camera>
+    </a-entity>
+              
+              
+            <a-ocean color="aqua" depth="100" width="100"></a-ocean>    
+    </a-scene>
+    
+  </body>
+ 
+</html>

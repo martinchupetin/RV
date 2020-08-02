@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Geologia</title>
+    <meta name="description" content="Geologia">
+      <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+      <script src="scripts/aframe-extras.ocean.min.js"></script>
+      <script src="scripts/aframe-particle-system.min.js"></script>
+      <script src="scripts/aframe-event-set-component.js"></script>
+      <script src="scripts/aframe-rain.min.js"></script>
+  </head>
+  <body>    
+    <a-scene>
+
+     <a-assets>
+        <img id="cielo" src="assets/cielo.png">
+        <img id="lateral" src="assets/borde_acan.jpg">
+        <img id="tierra" src="assets/TexturesCom_Gravel0159_1_seamless_S.jpg"></im>
+        <a-asset-item id="puente" src="3D/puente_sencillo/scene.gltf"></a-asset-item>
+        <a-asset-item id="puente2" src="3D/long_wood_bridge/scene.gltf"></a-asset-item>
+        <a-asset-item id="cartel_prohibido" src="3D/cartelbano/scene.gltf"></a-asset-item>
+        <a-asset-item id="cartel" src="3D/sign/scene.gltf"></a-asset-item>
+        <a-asset-item id="tronco_poste" src="3D/tronco_lungo_s1/scene.gltf"></a-asset-item>
+        <a-asset-item id="cuarzo" src="3D/roca5_-cuarzo/scene.gltf"></a-asset-item>
+     </a-assets>
+ <!--<a-entity position="0 2.25 -15" particle-system="preset: snow;"></a-entity>-->
+     <a-sky color="black"></a-sky>
+       <!-- ############### DIFINICION DE PLANOS APRA LAS SUPERFICIES ###############-->
+       <!-- Plano delantero-->
+        <a-plane color="#484" 
+                 repeat="5 5"
+                 position="0 0 4.5"
+                 rotation="-90 0 0"
+                 scale="100 14 1"
+                 >            
+        </a-plane>
+        <!-- Plano pared delantera-->
+        <a-plane src="#lateral"
+                  repeat="50 2"
+                   position="0 -2.5 -2.5"
+                   scale="100 5 5" side="double">
+            
+        </a-plane>       
+        <!-- Plano del fondo -->
+         <a-plane id="planofondo" color="#484" 
+                 position="0 0 -67.5"
+                 rotation="-90 0 0"
+                 scale="100 100 1"                  
+                 >            
+        </a-plane>
+        <!-- Plano pared fondo-->
+        <a-plane src="#lateral"
+                  repeat="50 2"
+                   position="0 -2.5 -17.5"
+                   scale="100 5 5"
+                   side="double">
+            
+        </a-plane>
+        <!-- Plano piso aguaa-->
+       <a-plane color="red"
+                 position="1 -4 -10"
+                 rotation="-90 0 0"
+                 scale="100 15 1"                 
+                 >            
+        </a-plane>
+        <!-- ############### FIN - DEFINICION DE PLANOS APRA LAS SUPERFICIES ###############-->
+        
+        <!--OBJETOS -->
+        <a-ocean id="agua" color="aqua" depth="50" width="10" position="1 -1 -15" scale="10 0.5 2"></a-ocean>
+        <a-entity id="paso" gltf-model="#puente2" rotation="0 0 0" position="1 -4 -10" scale="0.5 0.5 0.5" visible="true">            
+        </a-entity>
+        <a-entity id="poste_izq" gltf-model="#tronco_poste" scale="0.05 0.1 0.05" position="-0.95 0 -2" rotation="0 40 0">               
+        </a-entity>
+        <a-entity id="poste_der" gltf-model="#tronco_poste" scale="0.05 0.1 0.05" position="3.15 0 -2" rotation="0 40 0"></a-entity>
+        <a-entity gltf-model="#cartel_prohibido"
+                  position="5 1 -2"
+                  event-set__enter="_event: mouseenter; scale:3 3 3;"
+                  event-set__leave="_event: mouseleave;scale:1 1 1"      
+                  ></a-entity>
+        <a-entity gltf-model="#cartel" 
+                  scale="0.2 0.2 0.2" 
+                  position="-7.3 0 -23.8s" 
+                  rotation="0 55 0">
+               
+                  </a-entity>         
+                   
+             
+
+      <!--  <a-entity gltf-model="#cartel"
+                  class="clickeable"         
+                  position="-3.5 0.7 1"
+                  scale="0.3 0.3 0.3"
+                  rotation="0 35 0"
+                  event-set__aumentarvel="_event: click; _target: #paso; visible:true"
+                  
+                  ></a-entity> -->
+        
+        <a-circle src="#tierra" repeat="" position="-7 0.05 -25.5" rotation="-90 0 0" radius="1.5"></a-circle>          
+        <a-entity gltf-model="#cuarzo" position="-8 1.7 -30" scale="0.5 0.5 0.5" rotation="20 0 0"></a-entity>
+        <a-plane position="-7.23 0.58 -23.8" side="double" color="brown" height="0.3" width="0.7" rotation="0 55 0">
+          </a-plane> 
+        <!-- Definicion de la camara y el curso para interactuar-->
+        <a-entity position="0 0.1 5">
+            <a-camera wasd-controls="acceleration:75;" easing="30">
+                <a-cursor geometry="primitive: sphere; radius:0.02"
+                          material="color: white; shader: flat; opacity: 0.5"             
+                ></a-cursor>
+            </a-camera>
+        </a-entity>
+        <a-entity light="type: ambient">
+            
+        </a-entity>
+  
+    </a-scene>
+    
+  </body>
+ 
+</html>
