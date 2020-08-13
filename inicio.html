@@ -8,6 +8,33 @@
       <script src="scripts/aframe-particle-system.min.js"></script>
       <script src="scripts/aframe-event-set-component.js"></script>
       <script src="scripts/aframe-rain.min.js"></script>
+       <script>
+        AFRAME.registerComponent('seleccion-opcion',{
+            init: function(){
+                    var newcolor="yellow";
+                    this.el.addEventListener("mouseenter",function(e){
+                       // console.log(e.detail.intersection.point);
+                        this.setAttribute('material','color',newcolor);
+                        
+                    });
+                    this.el.addEventListener("mouseleave",function(e){
+                        this.setAttribute('material','color',"#333");                       
+                    });
+
+            }                         
+        });
+        AFRAME.registerComponent('inicio',{
+            init: function(){
+                 this.el.addEventListener("click",function(e){                
+                    var camara = document.querySelector('#camara'); 
+                    camara.setAttribute('wasd-controls','acceleration',75);
+                    /*var menu = document.querySelector('#menu'); 
+                    menu.setAttribute('visible',false);*/
+                 });
+            }
+        }); 
+        
+      </script>
   </head>
   <body>    
     <a-scene>
@@ -22,10 +49,39 @@
         <a-asset-item id="cartel" src="3D/sign/scene.gltf"></a-asset-item>
         <a-asset-item id="tronco_poste" src="3D/tronco_lungo_s1/scene.gltf"></a-asset-item>
         <a-asset-item id="cuarzo" src="3D/roca5_-cuarzo/scene.gltf"></a-asset-item>
+        <a-asset-item id="cristal_cuarzo" src="3D/cristal_de_cuarzo/scene.gltf"></a-asset-item>
+        <a-asset-item id="volcan_mitad" src="3D/volcan_mitad/scene.gltf"></a-asset-item>
+        
+
      </a-assets>
  <!--<a-entity position="0 2.25 -15" particle-system="preset: snow;"></a-entity>-->
+    <a-entity progressive-controls></a-entity>
      <a-sky color="black"></a-sky>
-       <!-- ############### DIFINICION DE PLANOS APRA LAS SUPERFICIES ###############-->
+      
+      <!-- COMENZAR-->
+
+      <a-entity id="menu" position="1.15w 1.7 3.8">        
+        <a-entity seleccion-opcion inicio id="iniciar"
+                  position="0 0.4 0" 
+                  geometry="primitive: plane; width: 1.5; height: auto"     
+                  material="color: #333;opacity:0.3;"
+                  text="color: white; align: center; value: INICIAR RECORRIDO; width: 2;"
+                  event-set__enter="_event: mouseenter; scale:1.5 1.5"
+                  event-set__leave="_event: mouseleave; scale:1 1"
+                  event-set__tarcol="_event: click; _target: #menu; visible:false;"
+                  >
+        </a-entity>
+        <a-entity seleccion-opcion id="opciones"
+                  position="0 0.2 0" 
+                  geometry="primitive: plane; width: 1.5; height: auto"               material="color: #333;opacity:0.3;"
+                  text="color: white; align: center; value: OPCIONES; width: 2;"
+                  event-set__enter="_event: mouseenter; scale:1.5 1.5"
+                  event-set__leave="_event: mouseleave; scale:1 1">
+        </a-entity>       
+       
+      </a-entity>
+      <!-- FIN - COMENZAR-->
+       <!-- ############### DIFINICION DE PLANOS PARA LAS SUPERFICIES ###############-->
        <!-- Plano delantero-->
         <a-plane color="#484" 
                  repeat="5 5"
@@ -95,13 +151,16 @@
                   
                   ></a-entity> -->
         
-        <a-circle src="#tierra" repeat="" position="-7 0.05 -25.5" rotation="-90 0 0" radius="1.5"></a-circle>          
+        <a-circle src="#tierra" repeat="" position="-7 0.01 -25.5" rotation="-90 0 0" radius="1.5"></a-circle>          
         <a-entity gltf-model="#cuarzo" position="-8 1.7 -30" scale="0.5 0.5 0.5" rotation="20 0 0"></a-entity>
-        <a-plane position="-7.23 0.58 -23.8" side="double" color="brown" height="0.3" width="0.7" rotation="0 55 0">
-          </a-plane> 
+        <a-circle src="#tierra" repeat="" position="4.8 0.01 -25" rotation="-90 0 0" radius="1.5"></a-circle> 
+        <a-entity gltf-model="#cristal_cuarzo" position="4.8 0.3 -19.1" scale="0.5 0.5 0.5" rotation="0 0 0"></a-entity>
+        <a-entity gltf-model="#volcan_mitad" position="0 3 -40" scale="0.01 0.01 0.01" rotation="0 0 0"></a-entity>
+       <!-- <a-plane position="-7.23 0.58 -23.8" side="double" color="brown" height="0.3" width="0.7" rotation="0 55 0">
+          </a-plane> --> 
         <!-- Definicion de la camara y el curso para interactuar-->
-        <a-entity position="0 0.1 5">
-            <a-camera wasd-controls="acceleration:75;" easing="30">
+        <a-entity position="1.2 0.1 5">
+            <a-camera id="camara" wasd-controls="acceleration:0;" easing="30">
                 <a-cursor geometry="primitive: sphere; radius:0.02"
                           material="color: white; shader: flat; opacity: 0.5"             
                 ></a-cursor>
