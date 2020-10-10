@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Geologia</title>
+    <meta name="description" content="Geologia">
+      <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+      <script src="scripts/aframe-extras.ocean.min.js"></script>
+      <script src="scripts/aframe-particle-system.min.js"></script>
+      <script src="scripts/aframe-event-set-component.js"></script>
+      <script src="scripts/aframe-rain.min.js"></script>
+	  <script src="scripts/acciones.js"></script>
+  </head>
+  <body>    
+    <a-scene>
+
+     <a-assets>
+        
+		 <a-asset-item id="planeta" src="3D/earth/scene.gltf"></a-asset-item>
+
+     </a-assets>
+     <!-- MENU -->
+       <a-entity id="menu" position="2 0 2">        
+        <a-entity seleccion-opcion volver id="volver"
+                  position="0 0.4 0" 
+                  geometry="primitive: plane; width: 1.5; height: auto"     
+                  material="color: #333;opacity:0.3;"
+                  text="color: white; align: center; value: Proceso de Subduccion; width: 2;"
+                  event-set__enter="_event: mouseenter; scale:1.5 1.5"
+                  event-set__leave="_event: mouseleave; scale:1 1"
+                  event-set__tarcol="_event: click; _target: #menu; visible:false;"
+                  >
+        </a-entity>   
+        
+
+ <a-link href="ppal.html" title="My Homepage" image="#homeThumbnail"></a-link>
+
+      </a-entity>
+     
+     <!-- FIN MENU -->
+     <!-- DEFINICION DE COMPONENTES-->
+       <a-entity gltf-model="#planeta" position="0 1 -10" scale="2 2 2" rotation="0 -90  0"></a-entity>
+     <!-- FIN DEFINICION DE COMPONENTES-->
+ <!--<a-entity position="0 2.25 -15" particle-system="preset: snow;"></a-entity>-->
+    <a-entity progressive-controls></a-entity>
+     <a-sky color="black"></a-sky>
+ 
+        <a-entity position="1.2 0.1 5">
+            <a-camera id="camara" wasd-controls="acceleration:150;" easing="30">
+                <a-cursor geometry="primitive: sphere; radius:0.02"
+                          material="color: white; shader: flat; opacity: 0.5"             
+                ></a-cursor>
+            </a-camera>
+        </a-entity>
+        <a-entity light="type: ambient">
+            
+        </a-entity>
+  
+    </a-scene>
+    
+  </body>
+ 
+</html>

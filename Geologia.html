@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Geologia</title>
+    <meta name="description" content="Geologia">
+      <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+      <script src="scripts/aframe-particle-system.min.js"></script>
+      <script src="scripts/aframe-event-set-component.js"></script>
+      <script src="scripts/acciones.js"></script>
+      <script src="scripts/aframe-extras.min.js"></script>
+      <script src="scripts/aframe-physics-system.min.js"></script>      
+      <script src="scripts/elementos.js"></script>
+  <body>    
+    <a-scene>
+
+     <a-assets>
+
+        <a-asset-item id="volcan" src="3d/aucanquilcha_antofagasta_chile/scene.gltf"></a-asset-item>
+        
+
+     </a-assets>
+ <!--<a-entity position="0 2.25 -15" particle-system="preset: snow;"></a-entity>-->
+    <a-entity progressive-controls></a-entity>
+     <a-sky color="black"></a-sky>
+      
+      <!-- COMENZAR-->
+
+      <a-entity id="menu" position="1.15 1.7 39">        
+        <a-entity seleccion-opcion inicio id="iniciar"
+                  position="0 0.4 0" 
+                  geometry="primitive: plane; width: 1.5; height: auto"     
+                  material="color: #333;opacity:0.3;"
+                  text="color: white; align: center; value: INICIAR RECORRIDO; width: 2;"
+                  event-set__enter="_event: mouseenter; scale:1.5 1.5"
+                  event-set__leave="_event: mouseleave; scale:1 1"
+                  event-set__tarcol="_event: click; _target: #menu; visible:false;"
+                  >
+        </a-entity>
+        <a-entity seleccion-opcion id="opciones"
+                  position="0 0.2 0" 
+                  geometry="primitive: plane; width: 1.5; height: auto"              
+                  material="color: #333;opacity:0.3;"
+                  text="color: white; align: center; value: OPCIONES; width: 2;"
+                  event-set__enter="_event: mouseenter; scale:1.5 1.5"
+                  event-set__leave="_event: mouseleave; scale:1 1">
+        </a-entity>       
+       
+      </a-entity>
+      <!-- FIN - COMENZAR-->
+          
+        <!--OBJETOS -->
+        <a-entity atenosfera="width:8;heigth:2;depth:50;color:brown;" position="-25 -10 -35">
+            
+        </a-entity>
+        <a-entity litosfera_izq="width:8;heigth:2;depth:50;opacity:0.7;color:#D1C7AC;" position="-25 -10 -35">
+            
+        </a-entity>
+        <a-entity corteza_oceanica="width:8;heigth:2;depth:50;opacity:0.5;color:#0B2367;" position="-25 -10 -35">
+            
+        </a-entity>
+        <a-entity zona_subduccion="width:8;heigth:2;depth:50;opacity:0.5;color:brown" position="1 -10 -35">
+            
+        </a-entity>
+        <a-entity litosfera_der="width:8;heigth:1;depth:50;opacity:0.8;color:#D1C7AC;" position="-1 -9.95 -35">            
+        </a-entity>
+        <a-entity corteza_continental="width:8;heigth:2;depth:50;opacity:0.97;color:#403A29;" position="1.2 -10 -35">
+            
+        </a-entity>
+        
+    <!--    <a-ocean id="agua" color="aqua" depth="50" width="10" position="-10 0 -15" scale="3 0.5 2"></a-ocean>
+
+        <a-entity gltf-model="#volcan" position="10 0 -25" scale="0.3 0.3 0.3" rotation="0 0 0"></a-entity>
+    -->
+        <!-- Definicion de la camara y el curso para interactuar-->
+        <a-entity position="1.2 0.1 40">
+            <a-camera id="camara" wasd-controls="acceleration:0;" easing="30">
+                <a-cursor geometry="primitive: sphere; radius:0.02"
+                          material="color: white; shader: flat; opacity: 0.5"             
+                ></a-cursor>
+            </a-camera>
+        </a-entity>
+        <a-entity light="type: ambient">
+            
+        </a-entity>
+  
+    </a-scene>
+    
+  </body>
+ 
+</html>
