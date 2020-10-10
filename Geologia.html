@@ -11,7 +11,7 @@
       <script src="scripts/aframe-physics-system.min.js"></script>      
       <script src="scripts/elementos.js"></script>
   <body>    
-    <a-scene>
+    <a-scene physics="gravity:0;">
 
      <a-assets>
 
@@ -25,7 +25,7 @@
       
       <!-- COMENZAR-->
 
-      <a-entity id="menu" position="1.15 1.7 39">        
+      <a-entity id="menu" position="-10 6.5 49">        
         <a-entity seleccion-opcion inicio id="iniciar"
                   position="0 0.4 0" 
                   geometry="primitive: plane; width: 1.5; height: auto"     
@@ -61,18 +61,19 @@
         <a-entity zona_subduccion="width:8;heigth:2;depth:50;opacity:0.5;color:brown" position="1 -10 -35">
             
         </a-entity>
-        <a-entity litosfera_der="width:8;heigth:1;depth:50;opacity:0.8;color:#D1C7AC;" position="-1 -9.95 -35">            
+        <a-entity litosfera_der="width:8;heigth:2;depth:50;opacity:0.8;color:#D1C7AC;" position="-1 -9.98 -35">            
         </a-entity>
-        <a-entity corteza_continental="width:8;heigth:2;depth:50;opacity:0.97;color:#403A29;" position="1.2 -10 -35">
+        <a-entity corteza_continental="width:8;heigth:2;depth:50;opacity:1;color:#3E3E3C;" position="-1 -10.03 -35">
             
         </a-entity>
         
-    <!--    <a-ocean id="agua" color="aqua" depth="50" width="10" position="-10 0 -15" scale="3 0.5 2"></a-ocean>
+        <a-ocean id="agua" color="#4486B9" depth="50" width="10" position="-25 1 -10" scale="3 1 6"></a-ocean>
+        <a-ocean id="agua" color="#4486B9" depth="50" width="10" opacity="0.7" position="-25 1 -10" scale="3 1 6"></a-ocean>
 
-        <a-entity gltf-model="#volcan" position="10 0 -25" scale="0.3 0.3 0.3" rotation="0 0 0"></a-entity>
-    -->
+       <!-- <a-entity gltf-model="#volcan" position="10 2 -25" scale="0.5 1 1" rotation="0 0 0"></a-entity> -->
+    
         <!-- Definicion de la camara y el curso para interactuar-->
-        <a-entity position="1.2 0.1 40">
+        <a-entity position="-10 5 50">
             <a-camera id="camara" wasd-controls="acceleration:0;" easing="30">
                 <a-cursor geometry="primitive: sphere; radius:0.02"
                           material="color: white; shader: flat; opacity: 0.5"             
