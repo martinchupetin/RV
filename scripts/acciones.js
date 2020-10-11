@@ -22,11 +22,12 @@ AFRAME.registerComponent('inicio',{
          });
     }
 });    
-AFRAME.registerComponent('collider-check',{
+AFRAME.registerComponent('prueba',{
     init: function(){
-         this.el.addEventListener('collisions', function () {
-              console.log('Player hit something!');
-         });         
+        this.el.addEventListener("collide",function(e){
+            console.log(e.detail.target.el);    
+        });
+
     }
 });    
 /*AFRAME.regis

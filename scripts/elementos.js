@@ -219,7 +219,10 @@ AFRAME.registerComponent('corteza_oceanica',{
         //texture.wrapT = THREE.RepeatWrapping;
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
         this.corteza_oceanica = new THREE.Mesh( this.draw(), material );
-        this.el.setObject3D('mesh', this.corteza_oceanica)
+        this.el.setObject3D('mesh', this.corteza_oceanica);
+       /* this.addEventListener("collisions",(e)=>{
+            console.log("yyyyyyyyyasda");
+        })*/
     },
     draw: function(){
         var width = this.data.width, height = this.data.height;
@@ -273,6 +276,7 @@ AFRAME.registerComponent('atenosfera',{
         this.atenosfera = new THREE.Mesh( this.draw(), material );
         this.updateOpacity();
         this.el.setObject3D('mesh', this.atenosfera)
+         
     },
     updateOpacity: function() {
         if (this.data.opacity < 0) { this.data.opacity = 0; }
