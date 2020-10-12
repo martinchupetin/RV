@@ -22,10 +22,17 @@ AFRAME.registerComponent('inicio',{
          });
     }
 });    
-AFRAME.registerComponent('prueba',{
+AFRAME.registerComponent('obj-colisionable',{
     init: function(){
-        this.el.addEventListener("collide",function(e){
-            console.log(e.detail.target.el);    
+        this.el.addEventListener("hitstart",function(e){
+            var el = document.getElementById('co'); 
+           // console.log(el);
+            el.setAttribute('corteza_oceanica',{depth:"51"});
+            
+              
+        });
+        this.el.addEventListener("hitend",function(e){
+            console.log(this);    
         });
 
     }

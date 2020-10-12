@@ -218,14 +218,12 @@ AFRAME.registerComponent('corteza_oceanica',{
         //texture.wrapS = THREE.MirroredRepeatWrapping;
         //texture.wrapT = THREE.RepeatWrapping;
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
-        this.corteza_oceanica = new THREE.Mesh( this.draw(), material );
+        this.corteza_oceanica = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth), material );
         this.el.setObject3D('mesh', this.corteza_oceanica);
-       /* this.addEventListener("collisions",(e)=>{
-            console.log("yyyyyyyyyasda");
-        })*/
+       
     },
-    draw: function(){
-        var width = this.data.width, height = this.data.height;
+    draw: function(ancho,alto,prof){
+        var width = ancho, height = alto;
         const shape = new THREE.Shape();
         const inicio_x = -15;
         const inicio_y = 11;
@@ -242,7 +240,7 @@ AFRAME.registerComponent('corteza_oceanica',{
 
         var extrudeSettings = {
             steps: 1,
-            depth: this.data.depth,
+            depth: prof,
             bevelEnabled: false,
             bevelThickness: 1,
             bevelSize: 1,
@@ -253,6 +251,13 @@ AFRAME.registerComponent('corteza_oceanica',{
         var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
 
         return geometry;
+    },
+    update: function(viejaData){
+        var nuevaData = this.data;
+        var el = this.el;
+        el.getObject3D('mesh').geometry = this.draw(4,nuevaData.height,nuevaData.depth);
+        console.log("prueba");
+        
     }
 });
 AFRAME.registerComponent('atenosfera',{

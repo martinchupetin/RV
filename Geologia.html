@@ -10,6 +10,7 @@
       <script src="scripts/aframe-extras.min.js"></script>
       <script src="scripts/aframe-physics-system.min.js"></script>      
       <script src="scripts/elementos.js"></script>
+      <script src="scripts/aabb-collider.js"></script>
   <body>    
     <a-scene physics="gravity:0;">
 
@@ -49,22 +50,23 @@
       <!-- FIN - COMENZAR-->
           
         <!--OBJETOS -->
-        <a-entity atenosfera="width:8;height:2;depth:50;color:brown;" position="-25 -10 -35"
-                 >
+        <a-entity id="atenosfera" class="atenosfera" atenosfera="width:8;height:2;depth:50;color:brown;" position="-25 -10 -35" aabb-collider>
                        
         </a-entity>
         <a-entity litosfera_izq="width:8;height:2;depth:50;opacity:0.7;color:#D1C7AC;" position="-25 -10 -35">
             
         </a-entity>
-        <a-entity corteza_oceanica="width:8;height:2;depth:50;opacity:0.5;color:#0B2367;" position="-25 -10 -35"
+        <a-entity id="co" corteza_oceanica="width:8;height:2;depth:50;opacity:0.5;color:#0B2367;" position="-25 -10 -35"
                   animation="property:position;
                         from:-80 -10 -35;
                          to:-25 -10 -35;
                          loop:false;
                          dir:alternate;
                          easing:easeInOutCubic;
-                         dur:20000"
-                  static-body physics-collider="ignoreSleep: false">
+                         dur:20000"           
+                        data-aabb-collider-dynamic    
+                        aabb-collider="debug:true;objects: .atenosfera" obj-colisionable
+                  >
             
         </a-entity>
         <a-entity zona_subduccion="width:8;height:2;depth:50;opacity:0.5;color:brown" position="1 -10 -35">
@@ -72,7 +74,9 @@
         </a-entity>
         <a-entity litosfera_der="width:8;height:2;depth:50;opacity:0.8;color:#D1C7AC;" position="-1 -9.98 -35" >            
         </a-entity>
-        <a-entity corteza_continental="width:8;height:2;depth:50;opacity:1;color:#3E3E3C;" position="-1 -10.03 -35" prueba dynamic-body physics-collider="ignoreSleep: false">
+        <a-entity corteza_continental="width:8;height:2;depth:50;opacity:1;color:#3E3E3C;" 
+        
+        position="-1 -10.03 -35">
             
         </a-entity>
         
