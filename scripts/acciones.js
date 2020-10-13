@@ -25,9 +25,10 @@ AFRAME.registerComponent('inicio',{
 AFRAME.registerComponent('obj-colisionable',{
     init: function(){
         this.el.addEventListener("hitstart",function(e){
-            var el = document.getElementById('co'); 
-           // console.log(el);
-            el.setAttribute('corteza_oceanica',{depth:"51"});
+            var el = document.getElementById('corteza_oceanica'); 
+            var alt = el.getAttribute('corteza_oceanica');
+            
+            el.setAttribute('corteza_oceanica',{depth:"51",fin:6});
             
               
         });

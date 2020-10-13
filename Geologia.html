@@ -50,13 +50,13 @@
       <!-- FIN - COMENZAR-->
           
         <!--OBJETOS -->
-        <a-entity id="atenosfera" class="atenosfera" atenosfera="width:8;height:2;depth:50;color:brown;" position="-25 -10 -35" aabb-collider>
+        <a-entity id="atenosfera" atenosfera="width:8;height:2;depth:50;x:-15;y:7;fin:0;color:brown;" position="-25 -10 -35">
                        
         </a-entity>
-        <a-entity litosfera_izq="width:8;height:2;depth:50;opacity:0.7;color:#D1C7AC;" position="-25 -10 -35">
+        <a-entity litosfera_izq="width:8;height:2;depth:50;x:-15;y:10;fin:0;opacity:0.7;color:#D1C7AC;" position="-25 -10 -35">
             
         </a-entity>
-        <a-entity id="co" corteza_oceanica="width:8;height:2;depth:50;opacity:0.5;color:#0B2367;" position="-25 -10 -35"
+        <a-entity id="corteza_oceanica" corteza_oceanica="width:8;height:2;depth:50;x:-15;y:11;fin:7;opacity:0.5;color:#0B2367;" position="-25 -10 -35"
                   animation="property:position;
                         from:-80 -10 -35;
                          to:-25 -10 -35;
@@ -65,18 +65,19 @@
                          easing:easeInOutCubic;
                          dur:20000"           
                         data-aabb-collider-dynamic    
-                        aabb-collider="debug:true;objects: .atenosfera" obj-colisionable
+                        aabb-collider="debug:true;objects: 
+                        #corteza_continental" obj-colisionable
                   >
             
         </a-entity>
-        <a-entity zona_subduccion="width:8;height:2;depth:50;opacity:0.5;color:brown" position="1 -10 -35">
+        <a-entity zona_subduccion="width:8;height:2;depth:50;opacity:0.5;x:-14;y:5.6;fin:0;color:brown" position="1 -10 -35">
             
         </a-entity>
-        <a-entity litosfera_der="width:8;height:2;depth:50;opacity:0.8;color:#D1C7AC;" position="-1 -9.98 -35" >            
+        <a-entity litosfera_der="width:8;height:2;depth:50;x:-15.5;y:7;fin:0;opacity:0.8;color:#D1C7AC;" position="-1 -9.98 -35" >            
         </a-entity>
-        <a-entity corteza_continental="width:8;height:2;depth:50;opacity:1;color:#3E3E3C;" 
-        
-        position="-1 -10.03 -35">
+        <a-entity id="corteza_continental" corteza_continental="width:8;height:2;depth:50;opacity:1;color:#3E3E3C;"     
+        position="-1 -10.03 -35"
+        aabb-collider>
             
         </a-entity>
         

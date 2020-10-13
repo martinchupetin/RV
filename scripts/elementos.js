@@ -10,7 +10,10 @@ AFRAME.registerComponent('corteza_continental', {
     bottomLeftRadius: {type: 'number', default: -1},
     bottomRightRadius: {type: 'number', default: -1},
     color: {type: 'color', default: "#F0F0F0"},
-    opacity: {type: 'number', default: 1}
+    opacity: {type: 'number', default: 1},
+    x: {type: 'number',default:0},
+    y: {type: 'number',default:0},
+    fin:{type: 'number',default:0}
   },
   init: function () {
     var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
@@ -92,11 +95,14 @@ AFRAME.registerComponent('litosfera_izq',{
         depth: {type: 'number', default: 1},  
         color: {type: 'color', default: "#F0F0F0"},
         opacity: {type: 'number', default: 1},
+        x: {type: 'number',default:0},
+        y: {type: 'number',default:0},
+        fin:{type: 'number',default:0},
         textura: {}
     },
     init: function(){        
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
-        this.litosfera_izq = new THREE.Mesh( this.draw(), material );
+        this.litosfera_izq = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin), material );
         this.updateOpacity();
         this.el.setObject3D('mesh', this.litosfera_izq)
     },
@@ -110,12 +116,12 @@ AFRAME.registerComponent('litosfera_izq',{
         }
         this.litosfera_izq.material.opacity = this.data.opacity;
     },
-    draw: function(){
-        var width = this.data.width, height = this.data.height;
+    draw: function(ancho,alto,prof,x,y,fin){
+        var width = ancho, height = alto;
         const shape = new THREE.Shape();
-        const x = -15;
-        const y = 10;
-        const fin = 0;
+     //   const x = -15;
+    //    const y = 10;
+    //    const fin = 0;
         shape.moveTo(x,y);
       //  shape.lineTo(x+20,y);
         shape.quadraticCurveTo(5,10,21,fin)
@@ -150,11 +156,12 @@ AFRAME.registerComponent('litosfera_der',{
         color: {type: 'color', default: "#F0F0F0"},
         opacity: {type: 'number', default: 1},
         x: {type: 'number',default:1},
-        y: {type: 'number',default:1}
+        y: {type: 'number',default:1},
+        fin:{type: 'number',default:0}
     },
     init: function(){
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
-        this.litosfera_der = new THREE.Mesh( this.draw(), material );
+        this.litosfera_der = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin), material );
         this.updateOpacity();
         this.el.setObject3D('mesh', this.litosfera_der)
     },
@@ -168,12 +175,12 @@ AFRAME.registerComponent('litosfera_der',{
         }
         this.litosfera_der.material.opacity = this.data.opacity;
     },
-    draw: function(){
-        var width = this.data.width, height = this.data.height;
+    draw: function(ancho,alto,prof,x,y,fin){
+        var width = ancho, height = alto;
         const shape = new THREE.Shape();
-        const x = -15.5;
-        const y = 7;
-        const fin = 0;
+    //    const x = -15.5;
+    //    const y = 7;
+    //    const fin = 0;
         shape.moveTo(x,y);
         //shape.quadraticCurveTo( ptctrlx, ptctrly, finx, finy);  
         shape.quadraticCurveTo(20,5,47, 9);
@@ -210,7 +217,8 @@ AFRAME.registerComponent('corteza_oceanica',{
         color: {type: 'color', default: "#F0F0F0"},
         opacity: {type: 'number', default: 1},
         x: {type: 'number',default:0},
-        y: {type: 'number',default:0}
+        y: {type: 'number',default:0},
+        fin:{type: 'number',default:0}
     },
     init: function(){
         //const loader=new THREE.TextureLoader();
@@ -218,16 +226,16 @@ AFRAME.registerComponent('corteza_oceanica',{
         //texture.wrapS = THREE.MirroredRepeatWrapping;
         //texture.wrapT = THREE.RepeatWrapping;
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
-        this.corteza_oceanica = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth), material );
+        this.corteza_oceanica = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin), material );
         this.el.setObject3D('mesh', this.corteza_oceanica);
        
     },
-    draw: function(ancho,alto,prof){
+    draw: function(ancho,alto,prof,inicio_x,inicio_y,fin){
         var width = ancho, height = alto;
         const shape = new THREE.Shape();
-        const inicio_x = -15;
-        const inicio_y = 11;
-        const fin= 0;
+       // const inicio_x = x;//-15;
+    //    const inicio_y = y;//11;
+      //  const fin= 0;
         shape.moveTo(inicio_x,inicio_y);
       //ok  shape.lineTo(3,11);
         shape.quadraticCurveTo(5,11,23,fin)
@@ -255,8 +263,14 @@ AFRAME.registerComponent('corteza_oceanica',{
     update: function(viejaData){
         var nuevaData = this.data;
         var el = this.el;
-        el.getObject3D('mesh').geometry = this.draw(4,nuevaData.height,nuevaData.depth);
-        console.log("prueba");
+      //  console.log(viejaData);
+    //    console.log(nuevaData);
+        
+        el.getObject3D('mesh').geometry = this.draw(nuevaData.width,nuevaData.height,nuevaData.depth,nuevaData.x,nuevaData.y,nuevaData.fin);
+            
+        //en caso de que quiera editar el color y rendereizar al momento
+        //el.getObject3D('mesh').material.color = new THREE.Color(data.color);
+        //console.log("prueba");
         
     }
 });
@@ -269,7 +283,8 @@ AFRAME.registerComponent('atenosfera',{
         color: {type: 'color', default: "#F0F0F0"},
         opacity: {type: 'number', default: 1},
         x: {type: 'number',default:0},
-        y: {type: 'number',default:0}
+        y: {type: 'number',default:0},
+        fin:{type: 'number',default:0}
     },
     init: function(){
         const loader=new THREE.TextureLoader();
@@ -278,7 +293,7 @@ AFRAME.registerComponent('atenosfera',{
         texture.wrapT = THREE.RepeatWrapping;
         //texture.repeat.set( 2, 3 );
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide, map:texture } );
-        this.atenosfera = new THREE.Mesh( this.draw(), material );
+        this.atenosfera = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin), material );
         this.updateOpacity();
         this.el.setObject3D('mesh', this.atenosfera)
          
@@ -293,12 +308,12 @@ AFRAME.registerComponent('atenosfera',{
         }
         this.atenosfera.material.opacity = this.data.opacity;
     },
-    draw: function(){
-        var width = this.data.width, height = this.data.height;
+    draw: function(ancho,alto,prof,x,y,fin){
+        var width = ancho, height = alto;
         const shape = new THREE.Shape();
-        const x = -15;
-        const y = 7;
-        const fin = 0;
+       // const x = -15;
+    //    const y = 7;
+    //    const fin = 0;
         shape.moveTo(x,y);
         shape.quadraticCurveTo(5,7,14,fin);
         shape.lineTo(x,fin);
@@ -332,7 +347,8 @@ AFRAME.registerComponent('zona_subduccion',{
         color: {type: 'color', default: "#F0F0F0"},
         opacity: {type: 'number', default: 1},
         x: {type: 'number',default:0},
-        y: {type: 'number',default:0}
+        y: {type: 'number',default:0},
+        fin:{type: 'number',default:0}
     },
     init: function(){
         //const loader=new THREE.TextureLoader();
@@ -340,7 +356,7 @@ AFRAME.registerComponent('zona_subduccion',{
         //texture.wrapS = THREE.MirroredRepeatWrapping;
         //texture.wrapT = THREE.RepeatWrapping;
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
-        this.zona_subduccion = new THREE.Mesh( this.draw(), material );
+        this.zona_subduccion = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin), material );
         this.updateOpacity();
         this.el.setObject3D('mesh', this.zona_subduccion)
     },
@@ -354,12 +370,12 @@ AFRAME.registerComponent('zona_subduccion',{
         }
         this.zona_subduccion.material.opacity = this.data.opacity;
     },
-    draw: function(){
-        var width = this.data.width, height = this.data.height;
+    draw: function(ancho,alto,prof,x,y,fin){
+        var width = ancho, height = alto;
         const shape = new THREE.Shape();
-        const x = -14;
-        const y = 5.6;
-        const fin = 0;
+      //  const x = -14;
+    //    const y = 5.6;
+       // const fin = 0;
         shape.moveTo(x,y);
         shape.quadraticCurveTo(1,1,35,7);
         shape.lineTo(45,7);       
