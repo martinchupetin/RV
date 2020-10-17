@@ -17,11 +17,11 @@ AFRAME.registerComponent('corteza_continental', {
   },
   init: function () {
     var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
-    this.corteza_continental = new THREE.Mesh( this.draw(), material );
+    this.corteza_continental = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin), material );
     this.updateOpacity();
     this.el.setObject3D('mesh', this.corteza_continental)
   },
-  update: function () {
+ /* update: function () {
     if (this.data.enabled) {
         //console.log(this.data);
       if (this.corteza_continental) {
@@ -33,7 +33,7 @@ AFRAME.registerComponent('corteza_continental', {
     } else {
       this.corteza_continental.visible = false;
     }
-  },
+  },*/
   updateOpacity: function() {
     if (this.data.opacity < 0) { this.data.opacity = 0; }
     if (this.data.opacity > 1) { this.data.opacity = 1; }
@@ -44,11 +44,11 @@ AFRAME.registerComponent('corteza_continental', {
     }
     this.corteza_continental.material.opacity = this.data.opacity;
   },
-  draw: function() {
+  draw: function(ancho,alto,prof,x,y,fin) {
     const shape = new THREE.Shape();
-    const inicio_x = -23;
-    const inicio_y = 9.2;
-    shape.moveTo(inicio_x,inicio_y);
+   // const x = -23;
+   // const y = 9.2;
+    shape.moveTo(x,y);
     //shape.quadraticCurveTo(0,17,20,12,47,11);
     //shape.lineTo(47,9);
      //shape.lineTo(10,10);
@@ -63,7 +63,7 @@ AFRAME.registerComponent('corteza_continental', {
 
     var extrudeSettings = {
       steps:   10,  
-      depth:  this.data.depth, 
+      depth:  prof, 
       bevelEnabled: false,//acepta corte bisleado  
       bevelThickness: 0,  //alto de biselado
       bevelSize: 0,  //tamaño o ancho de biselado
@@ -230,21 +230,21 @@ AFRAME.registerComponent('corteza_oceanica',{
         this.el.setObject3D('mesh', this.corteza_oceanica);
        
     },
-    draw: function(ancho,alto,prof,inicio_x,inicio_y,fin){
+    draw: function(ancho,alto,prof,x,y,fin){
         var width = ancho, height = alto;
         const shape = new THREE.Shape();
-       // const inicio_x = x;//-15;
-    //    const inicio_y = y;//11;
+       // const x = x;//-15;
+    //    const y = y;//11;
       //  const fin= 0;
-        shape.moveTo(inicio_x,inicio_y);
+        shape.moveTo(x,y);
       //ok  shape.lineTo(3,11);
         shape.quadraticCurveTo(5,11,23,fin)
         //shape.lineTo(7,10);
     //ok    shape.lineTo(23,fin);
         shape.lineTo(21,fin);
     //ok    shape.lineTo(5,10);
-    //ok    shape.lineTo(inicio_x,10);
-        shape.quadraticCurveTo(5,10,inicio_x,10);
+    //ok    shape.lineTo(x,10);
+        shape.quadraticCurveTo(5,10,x,10);
 
         var extrudeSettings = {
             steps: 1,
@@ -267,7 +267,6 @@ AFRAME.registerComponent('corteza_oceanica',{
     //    console.log(nuevaData);
         
         el.getObject3D('mesh').geometry = this.draw(nuevaData.width,nuevaData.height,nuevaData.depth,nuevaData.x,nuevaData.y,nuevaData.fin);
-            
         //en caso de que quiera editar el color y rendereizar al momento
         //el.getObject3D('mesh').material.color = new THREE.Color(data.color);
         //console.log("prueba");

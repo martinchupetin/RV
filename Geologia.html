@@ -11,6 +11,8 @@
       <script src="scripts/aframe-physics-system.min.js"></script>      
       <script src="scripts/elementos.js"></script>
       <script src="scripts/aabb-collider.js"></script>
+     
+
   <body>    
     <a-scene physics="gravity:0;">
 
@@ -63,10 +65,9 @@
                          loop:false;
                          dir:alternate;
                          easing:easeInOutCubic;
-                         dur:20000"           
-                        data-aabb-collider-dynamic    
-                        aabb-collider="debug:true;objects: 
-                        #corteza_continental" obj-colisionable
+                         dur:10000"  
+                         aabb-collider="debug:true;objects: 
+                        #corteza_continental,#caja;"
                   >
             
         </a-entity>
@@ -75,12 +76,11 @@
         </a-entity>
         <a-entity litosfera_der="width:8;height:2;depth:50;x:-15.5;y:7;fin:0;opacity:0.8;color:#D1C7AC;" position="-1 -9.98 -35" >            
         </a-entity>
-        <a-entity id="corteza_continental" corteza_continental="width:8;height:2;depth:50;opacity:1;color:#3E3E3C;"     
-        position="-1 -10.03 -35"
-        aabb-collider>
-            
-        </a-entity>
+        <a-entity id="corteza_continental" corteza_continental="width:8;height:2;depth:50;x:-23;y:9.2;opacity:1;color:#3E3E3C;"     
+        position="-1 -10.03 -35" obj-colisionable>
         
+        </a-entity>
+       <!-- <a-box id="caja" color="green" position="-45 0 15" scale="5 5 5" obj-colisionable></a-box>   -->
         <a-ocean id="agua" color="#4486B9" depth="50" width="10" position="-25 1 -10" scale="3 1 6"></a-ocean>
         <a-ocean id="agua" color="#4486B9" depth="50" width="10" opacity="0.7" position="-25 1 -10" scale="3 1 6"></a-ocean>
 

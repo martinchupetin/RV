@@ -22,22 +22,31 @@ AFRAME.registerComponent('inicio',{
          });
     }
 });    
+     
 AFRAME.registerComponent('obj-colisionable',{
     init: function(){
         this.el.addEventListener("hitstart",function(e){
-            var el = document.getElementById('corteza_oceanica'); 
-            var alt = el.getAttribute('corteza_oceanica');
-            
-            el.setAttribute('corteza_oceanica',{depth:"51",fin:6});
-            
-              
+            var el = document.getElementById('corteza_oceanica');                     
+           // console.log();
+           // modificar(el);
+            el.setAttribute('corteza_oceanica',{fin:0});
         });
         this.el.addEventListener("hitend",function(e){
-            console.log(this);    
+            console.log(e);    
+        });
+        this.el.addEventListener("hitclosest",function(e){
+            
         });
 
+
     }
-});    
+   
+});  
+function modificar(el){
+    console.log(el);
+    var fin = 6;
+    
+}
 /*AFRAME.regis
 /*AFRAME.registerComponent('volver',{
     init: function(){
