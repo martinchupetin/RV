@@ -19,8 +19,13 @@ AFRAME.registerComponent('inicio',{
          this.el.addEventListener("click",function(e){                
             var camara = document.querySelector('#camara'); 
             camara.setAttribute('wasd-controls','acceleration',200);
-            /*var menu = document.querySelector('#menu'); 
-            menu.setAttribute('visible',false);*/
+             var corteza_oceanica = document.getElementById('corteza_oceanica');
+             corteza_oceanica.setAttribute('animation',
+                                           "property:position;                        from:-80 -10 -35;to:-25 -10 -35;loop:false;                         dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
+             var litosfera_izq = document.getElementById('litosfera_izq');
+             litosfera_izq.setAttribute('animation',
+                                           "property:position;                        from:-80 -10 -35;to:-25 -10 -35;loop:false;                         dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
+
          });
     }
 });    
@@ -32,9 +37,10 @@ AFRAME.registerComponent('obj-colisionable',{
             var final_co = el_co.getAttribute('corteza_oceanica').fin;
             modificarCorteza_Oceanica(final_co);
             var el_cc = document.getElementById('corteza_continental');
-            var ctrly_cc = el_cc.getAttribute('corteza_continental').ctrl_y;
-            modificarCorteza_Continental(ctrly_cc);
-            //el.setAttribute('corteza_oceanica',{fin:8});
+            var pto_cc = el_cc.getAttribute('corteza_continental').p2_ctrl_y;
+            //modificarCorteza_Continental(p1_ctrly_cc,35,0.5,80,"p1_ctrl_y");
+            modificarCorteza_Continental(pto_cc,35,0.5,80,"p2_ctrl_y");
+            
          
         });
         this.el.addEventListener("hitend",function(e){
@@ -49,7 +55,6 @@ AFRAME.registerComponent('obj-colisionable',{
    
 });  
 function modificarCorteza_Oceanica(final){
-    //var final = 9;
     var el = document.getElementById('corteza_oceanica');                   
     intervalo_co = setInterval(move,80);
     function move(){        
@@ -65,17 +70,17 @@ function modificarCorteza_Oceanica(final){
 
 
 }
-function modificarCorteza_Continental(ctrl_y){
-    var el = document.getElementById('corteza_continental');                   
-    intervalo_cc = setInterval(move,80);
+function modificarCorteza_Continental(pto,tope,inc,velocidad,atributo){
+    var el = document.getElementById('corteza_continental');  
+    intervalo_cc = setInterval(move,velocidad);
     function move(){        
-        if (ctrl_y==35){
+        if (pto==tope){
             clearInterval(intervalo_cc);
         }
         else{            
-            ctrl_y=ctrl_y+0.5;         
-            console.log(ctrl_y);
-            el.setAttribute('corteza_continental',{ctrl_y:ctrl_y});    
+            pto=pto+inc;         
+            console.log(pto);
+            el.setAttribute('corteza_continental',{p2_ctrl_y:pto});    
         }    
     }                
 

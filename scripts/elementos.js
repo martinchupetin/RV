@@ -9,13 +9,15 @@ AFRAME.registerComponent('corteza_continental', {
     opacity: {type: 'number', default: 1},
     x: {type: 'number',default:0},
     y: {type: 'number',default:0},  
-    ctrl_x: {type: 'number',default:0},
-    ctrl_y: {type: 'number',default:0},
+    p1_ctrl_x: {type: 'number',default:0},
+    p1_ctrl_y: {type: 'number',default:0},
+    p2_ctrl_x: {type: 'number',default:0},
+    p2_ctrl_y: {type: 'number',default:0},
     fin:{type: 'number',default:0}
   },
   init: function () {
     var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
-    this.corteza_continental = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin,this.data.ctrl_x,this.data.ctrl_y), material );
+    this.corteza_continental = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin,this.data.p1_ctrl_x,this.data.p1_ctrl_y,this.data.p2_ctrl_x,this.data.p2_ctrl_y), material );
     this.updateOpacity();
     this.el.setObject3D('mesh', this.corteza_continental)
   },
@@ -25,7 +27,7 @@ AFRAME.registerComponent('corteza_continental', {
       //  console.log(viejaData);
     //    console.log(nuevaData);
         
-        el.getObject3D('mesh').geometry = this.draw(nuevaData.width,nuevaData.height,nuevaData.depth,nuevaData.x,nuevaData.y,nuevaData.fin,nuevaData.ctrl_x,nuevaData.ctrl_y);
+        el.getObject3D('mesh').geometry = this.draw(nuevaData.width,nuevaData.height,nuevaData.depth,nuevaData.x,nuevaData.y,nuevaData.fin,nuevaData.p1_ctrl_x,nuevaData.p1_ctrl_y,nuevaData.p2_ctrl_x,nuevaData.p2_ctrl_y);
 
         //en caso de que quiera editar el color y rendereizar al momento
         //el.getObject3D('mesh').material.color = new THREE.Color(data.color);
@@ -55,7 +57,7 @@ AFRAME.registerComponent('corteza_continental', {
     }
     this.corteza_continental.material.opacity = this.data.opacity;
   },
-  draw: function(ancho,alto,prof,x,y,fin,ctrl_x,ctrl_y) {
+  draw: function(ancho,alto,prof,x,y,fin,p1_ctrl_x,p1_ctrl_y,p2_ctrl_x,p2_ctrl_y) {
     const shape = new THREE.Shape();
    // const x = -23;
    // const y = 9.2;
@@ -64,7 +66,7 @@ AFRAME.registerComponent('corteza_continental', {
     //shape.quadraticCurveTo( ptctrlx, ptctrly, finx, finy);  
  
     //este es el oficial// shape.bezierCurveTo(10,15,20,11,47,11);
-      shape.bezierCurveTo(ctrl_x,ctrl_y,20,11,47,11);
+      shape.bezierCurveTo(p1_ctrl_x,p1_ctrl_y,p2_ctrl_x,p2_ctrl_y,47,11);
     shape.lineTo(47,9);
     shape.quadraticCurveTo(21,5,-15.5,7);
     shape.quadraticCurveTo(-22,9,-23,fin)
