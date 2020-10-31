@@ -139,7 +139,7 @@ AFRAME.registerComponent('litosfera_izq',{
         shape.quadraticCurveTo(5,10,21,fin);
     //    shape.lineTo(21,fin);
         shape.lineTo(14,fin);
-        shape.quadraticCurveTo(x+20,7,x,7)
+        shape.quadraticCurveTo(5,7,x,7)
     //ok    shape.lineTo(1,7);
         //shape.lineTo(x,7);
 
