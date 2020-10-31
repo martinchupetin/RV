@@ -66,7 +66,7 @@ AFRAME.registerComponent('corteza_continental', {
     //shape.quadraticCurveTo( ptctrlx, ptctrly, finx, finy);  
  
     //este es el oficial// shape.bezierCurveTo(10,15,20,11,47,11);
-      shape.bezierCurveTo(p1_ctrl_x,p1_ctrl_y,p2_ctrl_x,p2_ctrl_y,47,11);
+    shape.bezierCurveTo(p1_ctrl_x,p1_ctrl_y,p2_ctrl_x,p2_ctrl_y,47,11);
     shape.lineTo(47,9);
     shape.quadraticCurveTo(21,5,-15.5,7);
     shape.quadraticCurveTo(-22,9,-23,fin)
@@ -135,10 +135,11 @@ AFRAME.registerComponent('litosfera_izq',{
     //    const fin = 0;
         shape.moveTo(x,y);
       //  shape.lineTo(x+20,y);
-        shape.quadraticCurveTo(5,10,21,fin)
+        //shape.quadraticCurveTo(5,10,21,fin);
+        shape.quadraticCurveTo(5,10,21,fin);
     //    shape.lineTo(21,fin);
         shape.lineTo(14,fin);
-        shape.quadraticCurveTo(5,7,x,7)
+        shape.quadraticCurveTo(x+20,7,x,7)
     //ok    shape.lineTo(1,7);
         //shape.lineTo(x,7);
 
@@ -156,6 +157,19 @@ AFRAME.registerComponent('litosfera_izq',{
         var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
 
         return geometry;
+    },
+    update: function(viejaData){
+        var nuevaData = this.data;
+        var el = this.el;
+      //  console.log(viejaData);
+    //    console.log(nuevaData);
+        
+        el.getObject3D('mesh').geometry = this.draw(nuevaData.width,nuevaData.height,nuevaData.depth,nuevaData.x,nuevaData.y,nuevaData.fin);
+
+        //en caso de que quiera editar el color y rendereizar al momento
+        //el.getObject3D('mesh').material.color = new THREE.Color(data.color);
+        //console.log("prueba");
+        
     }
 });
 AFRAME.registerComponent('litosfera_der',{
@@ -194,7 +208,7 @@ AFRAME.registerComponent('litosfera_der',{
     //    const fin = 0;
         shape.moveTo(x,y);
         //shape.quadraticCurveTo( ptctrlx, ptctrly, finx, finy);  
-        shape.quadraticCurveTo(20,5,47, 9);
+        shape.quadraticCurveTo(20,5,47,9);
         //shape.lineTo(47,9);
         shape.lineTo(47,7);
         shape.lineTo(37,7);
