@@ -47,7 +47,7 @@ AFRAME.registerComponent('colision', {
     this.dirty = true;
 
     this.hitStartEventDetail = {intersectedEls: this.newIntersectedEls};
-     // console.log(this);
+     //w console.log(this);
   },
 
   play: function () {

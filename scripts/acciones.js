@@ -1,6 +1,7 @@
 var intervalo_co;
 var intervalo_cc;
 var intervalo_li;
+var intervalo_at;
 AFRAME.registerComponent('seleccion-opcion',{
             init: function(){
                     var newcolor="yellow";
@@ -47,12 +48,20 @@ AFRAME.registerComponent('obj-colisionable',{
                         break;
                     case 'litosfera_izq':    
                         var el_li = document.getElementById('litosfera_izq');
-                        var pto_li = el_li.getAttribute('litosfera_izq').fin;
-                        modificarLitosfera_Izq(pto_li,0,0.25,80,"fin");      
+                        var fin_li = el_li.getAttribute('litosfera_izq').fin;
+                        var fin_int_li = el_li.getAttribute('litosfera_izq').fin_int;
+                        var x_int_li = el_li.getAttribute('litosfera_izq').x_int;
+                        var y_int_li = el_li.getAttribute('litosfera_izq').y_int;
+                        modificarLitosfera_Izq(fin_li,fin_int_li,x_int_li,y_int_li,0,0.25,80);      
                         var el_cc = document.getElementById('corteza_continental');
                         var pto_cc = el_cc.getAttribute('corteza_continental').p1_ctrl_y;
                         //modificarCorteza_Continental(p1_ctrly_cc,35,0.5,80,"p1_ctrl_y");
-                        modificarCorteza_Continental(pto_cc,50,0.5,80,"p2_ctrl_y");
+                        modificarCorteza_Continental(pto_cc,50,0.5,80);
+                        var el_at = document.getElementById('atenosfera');
+                        var ctrl_x = el_at.getAttribute('atenosfera').p1_ctrl_x;
+                        var ctrl_y = el_at.getAttribute('atenosfera').p1_ctrl_y;
+                        var x_tope = el_at.getAttribute('atenosfera').x_tope;
+                        modificarAtenosfera(ctrl_x,ctrl_y,x_tope,5,0,0.25,80);
                         break;
                     default:
                         console.log('deafult');
@@ -86,7 +95,7 @@ function modificarCorteza_Oceanica(final){
 
 
 }
-function modificarCorteza_Continental(pto,tope,inc,velocidad,atributo){
+function modificarCorteza_Continental(pto,tope,inc,velocidad){
     var el = document.getElementById('corteza_continental');  
    // var x = -23;
     intervalo_cc = setInterval(move,velocidad);
@@ -103,17 +112,53 @@ function modificarCorteza_Continental(pto,tope,inc,velocidad,atributo){
     }                
 
 }
-function modificarLitosfera_Izq(pto,tope,inc,velocidad,atributo){
+function modificarLitosfera_Izq(fin,fin_int,x_int,y_int,tope,inc,velocidad){
     var el = document.getElementById('litosfera_izq');
+    
     intervalo_li = setInterval(move,velocidad);
     function move(){
-        if (pto==tope){
+        if (fin==tope){
             clearInterval(intervalo_li);
+            
         }
         else{
-            pto=pto-inc;
+            fin=fin-inc;
+            if (x_int>14){
+                    x_int=x_int-inc;    
+                }
+            if (y_int>0){
+                    y_int=y_int-inc;
+                }
+            if (fin_int>21){
+                fin_int=fin_int-inc;
+            }
             //console.log(pto);
-            el.setAttribute('litosfera_izq',{fin:pto});
+            el.setAttribute('litosfera_izq',{fin:fin,fin_int:fin_int,x_int:x_int,y_int:y_int});
+        }
+    }
+}
+function modificarAtenosfera(p1_ctrl_x,p1_ctrl_y,x_tope,tope_ctrlx,tope_ctrly,inc,velocidad){
+    var el = document.getElementById('atenosfera');
+    
+    intervalo_at = setInterval(move,velocidad);
+    function move(){
+        if (x_tope==14){
+            clearInterval(intervalo_at);
+            
+        }
+        else{
+            x_tope=x_tope-inc;   
+             
+            if (p1_ctrl_x>tope_ctrlx){
+                    p1_ctrl_x=p1_ctrl_x-inc;    
+                }
+            if (p1_ctrl_y>tope_ctrly){
+                p1_ctrl_y=p1_ctrl_y-inc;                       
+               
+                }
+            
+            //console.log(pto);
+            el.setAttribute('atenosfera',{p1_ctrl_x:p1_ctrl_x,p1_ctrl_y:p1_ctrl_y,x_tope:x_tope});
         }
     }
 }
