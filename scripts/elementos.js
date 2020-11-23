@@ -69,7 +69,7 @@ AFRAME.registerComponent('corteza_continental', {
     shape.bezierCurveTo(p1_ctrl_x,p1_ctrl_y,p2_ctrl_x,p2_ctrl_y,47,11);
     shape.lineTo(47,9);
     shape.quadraticCurveTo(21,5,-15.5,7);
-    shape.quadraticCurveTo(-22,9,-23,fin)
+    shape.quadraticCurveTo(-22,9,x,fin)
     
 
     var extrudeSettings = {

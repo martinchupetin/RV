@@ -16,20 +16,31 @@ AFRAME.registerComponent('seleccion-opcion',{
 
             }                         
         });
+AFRAME.registerComponent('comenzar',{
+            init: function(){            
+                    this.el.addEventListener("click",function(e){
+                        var camara = document.querySelector('#camara'); 
+                        camara.setAttribute('wasd-controls','acceleration',700);
+                    });
+                    
+            }                         
+        });
 AFRAME.registerComponent('inicio',{
     init: function(){
          this.el.addEventListener("click",function(e){                
-            var camara = document.querySelector('#camara'); 
-            camara.setAttribute('wasd-controls','acceleration',200);
+            
              var corteza_oceanica = document.getElementById('corteza_oceanica');
              corteza_oceanica.setAttribute('animation',
                                            "property:position;                        from:-80 -10 -35;to:-25 -10 -35;loop:false;                         dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
              var litosfera_izq = document.getElementById('litosfera_izq');
              litosfera_izq.setAttribute('animation',
                                            "property:position;                        from:-80 -10 -35;to:-25 -10 -35;loop:false;                         dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
-             var litosfera_izq = document.getElementById('atenosfera');
-             litosfera_izq.setAttribute('animation',
+             var atenosfera = document.getElementById('atenosfera');
+             atenosfera.setAttribute('animation',
                                            "property:position;                        from:-80 -10 -35;to:-25 -10 -35;loop:false;                         dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
+             var oceano = document.getElementById('oceano');
+             oceano.setAttribute('animation',
+                                           "property:position;                        from:-73 1 -10;                            to:-18 1 -10;loop:false;                  dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
 
          });
     }
@@ -55,8 +66,8 @@ AFRAME.registerComponent('obj-colisionable',{
                         modificarLitosfera_Izq(fin_li,fin_int_li,x_int_li,y_int_li,0,0.25,80);      
                         var el_cc = document.getElementById('corteza_continental');
                         var pto_cc = el_cc.getAttribute('corteza_continental').p1_ctrl_y;
-                        //modificarCorteza_Continental(p1_ctrly_cc,35,0.5,80,"p1_ctrl_y");
-                        modificarCorteza_Continental(pto_cc,50,0.5,80);
+                        modificarCorteza_Continental(pto_cc,40,0.5,70); //modificarCorteza_Continental(p1_ctrly_cc,35,0.5,80,"p1_ctrl_y");
+                        
                         var el_at = document.getElementById('atenosfera');
                         var ctrl_x = el_at.getAttribute('atenosfera').p1_ctrl_x;
                         var ctrl_y = el_at.getAttribute('atenosfera').p1_ctrl_y;
@@ -97,7 +108,8 @@ function modificarCorteza_Oceanica(final){
 }
 function modificarCorteza_Continental(pto,tope,inc,velocidad){
     var el = document.getElementById('corteza_continental');  
-   // var x = -23;
+    var x = -23;
+    var ptoctrlx = 10;
     intervalo_cc = setInterval(move,velocidad);
     function move(){        
         if (pto==tope){
@@ -105,9 +117,10 @@ function modificarCorteza_Continental(pto,tope,inc,velocidad){
         }
         else{            
             pto=pto+inc;
-           // x = x+0.25
+            x = x+0.50;
+         //   ptoctrlx = ptoctrlx+1;
             //console.log(pto);
-            el.setAttribute('corteza_continental',{p1_ctrl_y:pto});    
+            el.setAttribute('corteza_continental',{p1_ctrl_y:pto,x:x});    
         }    
     }                
 
