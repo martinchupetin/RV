@@ -16,7 +16,12 @@ AFRAME.registerComponent('corteza_continental', {
     fin:{type: 'number',default:0}
   },
   init: function () {
-    var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
+    const loader=new THREE.TextureLoader();
+    const texture = loader.load('assets/gravel2.jpg');
+    texture.wrapS = THREE.MirroredRepeatWrapping;
+    texture.wrapT = THREE.MirroredRepeatWrapping;
+   // texture.repeat.set(-4,4);  
+    var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide, map:texture  } );
     this.corteza_continental = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin,this.data.p1_ctrl_x,this.data.p1_ctrl_y,this.data.p2_ctrl_x,this.data.p2_ctrl_y), material );
     this.updateOpacity();
     this.el.setObject3D('mesh', this.corteza_continental)
@@ -69,6 +74,7 @@ AFRAME.registerComponent('corteza_continental', {
     shape.bezierCurveTo(p1_ctrl_x,p1_ctrl_y,p2_ctrl_x,p2_ctrl_y,47,11);
     shape.lineTo(47,9);
     shape.quadraticCurveTo(21,5,-15.5,7);
+ //   shape.lineTo(x,7);
     shape.quadraticCurveTo(-22,9,x,fin)
     
 
@@ -328,10 +334,11 @@ AFRAME.registerComponent('atenosfera',{
     },
     init: function(){
         const loader=new THREE.TextureLoader();
-        const texture = loader.load('assets/montana.jpg');
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        //texture.repeat.set( 2, 3 );
+        const texture = loader.load('assets/gravej.jpg');
+        texture.wrapS = 1024;//THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatMirroredWrapping;
+       // texture.repeat.set( 10, 10 );
+        //var texture = THREE.ImageUtils.loadTexture('assets/montana.jpg');        
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide, map:texture } );
         this.atenosfera = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin,this.data.x_tope,this.data.p1_ctrl_x,this.p1_ctrl_y), material );
         this.updateOpacity();
@@ -401,10 +408,10 @@ AFRAME.registerComponent('zona_subduccion',{
         fin:{type: 'number',default:0}
     },
     init: function(){
-        //const loader=new THREE.TextureLoader();
-        //const texture = loader.load('assets/borde_acan.jpg');
-        //texture.wrapS = THREE.MirroredRepeatWrapping;
-        //texture.wrapT = THREE.RepeatWrapping;
+      //  const loader=new THREE.TextureLoader();
+    //    const texture = loader.load('assets/montana.jpg');
+    //    texture.wrapS = THREE.MirroredRepeatWrapping;
+    //    texture.wrapT = THREE.RepeatWrapping;
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide } );
         this.zona_subduccion = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin), material );
         this.updateOpacity();

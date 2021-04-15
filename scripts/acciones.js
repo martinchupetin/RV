@@ -20,7 +20,7 @@ AFRAME.registerComponent('comenzar',{
             init: function(){            
                     this.el.addEventListener("click",function(e){
                         var camara = document.querySelector('#camara'); 
-                        camara.setAttribute('wasd-controls','acceleration',700);
+                        camara.setAttribute('wasd-controls','acceleration',200);
                     });
                     
             }                         
@@ -45,7 +45,17 @@ AFRAME.registerComponent('inicio',{
          });
     }
 });    
-     
+/*
+AFRAME.registerComponent('pausar',{
+    init: function(){
+         this.el.addEventListener("click",function(e){                
+            
+           (document.getElementById('corteza_oceanica')).setAttribute('enabled',false);
+                        
+         });
+    }
+}); 
+  */   
 AFRAME.registerComponent('obj-colisionable',{
     init: function(){       
         //console.log(this.el.getAttribute('id'));

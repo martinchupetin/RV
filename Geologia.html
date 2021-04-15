@@ -3,11 +3,12 @@
     <meta charset="utf-8">
     <title>Geologia</title>
     <meta name="description" content="Geologia">
-      <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+      <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
       <script src="scripts/aframe-particle-system.min.js"></script>
       <script src="scripts/aframe-event-set-component.js"></script>
       <script src="scripts/acciones.js"></script>
       <script src="scripts/aframe-extras.min.js"></script>
+      <script src="scripts/aframe-extras.ocean.min.js"></script>
       <script src="scripts/aframe-physics-system.min.js"></script>      
       <script src="scripts/elementos.js"></script>
       <script src="scripts/colisiones.js"></script>
@@ -22,7 +23,7 @@
         
 
      </a-assets>
- <!--<a-entity position="0 2.25 -15" particle-system="preset: snow;"></a-entity>-->
+ <a-entity position="100 1.25 0" particle-system="preset: colors;blending:4;size:2;type:3;color:#ffb405;"></a-entity>
     <a-entity progressive-controls></a-entity>
      <a-sky color="black"></a-sky>
       
@@ -61,14 +62,14 @@
       <!-- FIN - COMENZAR-->
           
         <!--OBJETOS -->
-        <a-entity id="atenosfera" atenosfera="width:8;height:2;depth:50;x:-15;y:7;fin:0;x_tope:23;p1_ctrl_x:14;p1_ctrl_y:7;color:brown;" position="-80 -10 -35" 
+        <a-entity id="atenosfera" atenosfera="width:8;height:2;depth:50;x:-15;y:7;fin:0;x_tope:23;p1_ctrl_x:14;p1_ctrl_y:7;" position="-80 -10 -35" 
                   animation="" 
                   colision="debug:false;objects:
                   #corteza_continental;"
                  >
                        
         </a-entity>
-        <a-entity id="litosfera_izq" litosfera_izq="width:8;height:2;depth:50;x:-15;y:10;fin:10;fin_int:23;x_int:23;y_int:7;p1_ctrl_x:5;p1_ctrl_y:10;opacity:0.7;color:#D1C7AC;" position="-80 -10 -35"
+        <a-entity id="litosfera_izq" litosfera_izq="width:8;height:2;depth:50;x:-15;y:10;fin:10;fin_int:23;x_int:23;y_int:7;p1_ctrl_x:5;p1_ctrl_y:10;opacity:0.7;color:#D8BFD8;" position="-80 -10 -35"
                   animation=""
                   colision="debug:false;objects:
                   #corteza_continental;"
@@ -89,7 +90,7 @@
         </a-entity>
         <a-entity litosfera_der="width:8;height:2;depth:50;x:-15.5;y:7;fin:0;opacity:0.8;color:#D1C7AC;" position="-1 -9.98 -35" >            
         </a-entity>
-        <a-entity id="corteza_continental" corteza_continental="width:8;height:2;depth:50;x:-23;y:9.2;fin:9.2;p1_ctrl_x:10;p1_ctrl_y:15;p2_ctrl_x:20;p2_ctrl_y:11;opacity:1;color:#0B6121;"     
+        <a-entity id="corteza_continental" corteza_continental="width:8;height:2;depth:50;x:-23;y:9.2;fin:9.2;p1_ctrl_x:10;p1_ctrl_y:15;p2_ctrl_x:20;p2_ctrl_y:11;opacity:1;"     
         position="-1 -10.03 -35">
         
         </a-entity>
@@ -114,7 +115,7 @@
             </a-plane>    
        </a-entity>
        
-    <!--    <a-ocean id="agua2" color="#4486B9" depth="50" width="10" opacity="0.7" position="-80 1 -10" scale="3 1 6" animation=""></a-ocean> -->
+     <!--   <a-ocean id="agua2" color="#4486B9" depth="50" width="10" opacity="0.7" position="-80 1 -10" scale="3 1 6" animation=""></a-ocean> -->
         <a-entity id="oceano" animation="" position="-73 1 -10" scale="3 1 1">
             <a-ocean id="agua1" color="#4486B9" depth="50" width="15" ></a-ocean> 
             <a-ocean id="agua2" color="#4486B9" depth="50" width="15" opacity="0.7" ></a-ocean>   
