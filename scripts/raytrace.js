@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>A-Frame Raytrace Component - Basic</title>
-    <meta name="description" content="Basic example for Raytrace component."></meta>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="scripts/aframe-raytrace-component.min.js"></script>
-  </head>
-  <body>
-  
-  
-  
-  <script id="blob-fs" type="x-shader/x-fragment">
-      
-      precision mediump float;
+ precision mediump float;
       
       uniform float time;
       uniform vec3 localCameraPos;
@@ -78,7 +63,7 @@
         float sA,sP;
         
         // march to bg
-        vec3 color=vec3(1.0,1.0,1.0);
+        vec3 color=vec3(0.912,0.673,0.130);
         float f=0.0;
         float d=0.001;
         vec3 surfaceColor;
@@ -103,7 +88,7 @@
           float diffuse=max(dot(N,L),0.0);
           vec3 H = normalize(L-curCameraRayUnit);
           float specular = max(dot(H,N),0.0);
-          color = (diffuse*0.8+0.2)*vec3(1.0,0,1.0) + pow(specular,specP)*specA;
+          color = (diffuse*0.8+0.2)*vec3(0.912,0.673,0.130) + pow(specular,specP)*specA;
           
         } else {
           
@@ -114,36 +99,3 @@
         gl_FragColor = vec4(color,1.0);
         
       }
-      
-    </script>
-    
-    
-
-  
-  
-  
-  
-  
-    <a-scene stats>
-      <a-assets>
-        <img crossorigin="anonymous" id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
-        <img crossorigin="anonymous" id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg">
-      </a-assets>
-      
-      <a-entity position="0 0 -1">
-        <a-box position="0 1.65 0" scale="0.5 0.5 0.5" raytrace="shader:#blob-fs; backside:true;"></a-box>
-        <a-cylinder radius="0.03" height="2.7" color="#345" segments-height="1" segments-radial="8"></a-cylinder>
-        <a-cylinder position="0 1.38 0" radius="0.3" height="0.03" color="#345" segments-height="1" segments-radial="48"></a-cylinder>
-      </a-entity>
-      
-      
-      
-      <a-light type="ambient" color="#445451"></a-light>
-      <a-light type="point" intensity="2" position="2 4 4"></a-light>
-      <a-sky height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048" segments-height="5" segments-width="8"></a-sky>
-      <a-plane src="#groundTexture" rotation="-90 0 0" height="100" width="100"></a-plane>
-      
-    </a-scene>
-
-  </body>
-</html>

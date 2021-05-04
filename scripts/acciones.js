@@ -2,6 +2,13 @@ var intervalo_co;
 var intervalo_cc;
 var intervalo_li;
 var intervalo_at;
+var estado_cortezaOceanica;
+var estado_atenosfera;
+var estado_litosferaIzq;
+var estado_oceano;
+var pausa=false;
+var vel=80;
+
 AFRAME.registerComponent('seleccion-opcion',{
             init: function(){
                     var newcolor="yellow";
@@ -30,32 +37,105 @@ AFRAME.registerComponent('inicio',{
          this.el.addEventListener("click",function(e){                
             
              var corteza_oceanica = document.getElementById('corteza_oceanica');
-             corteza_oceanica.setAttribute('animation',
-                                           "property:position;                        from:-80 -10 -35;to:-25 -10 -35;loop:false;                         dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
+             corteza_oceanica.setAttribute('animation',"property:position;from:-80 -10 -35;to:-25 -10 -35;loop:false;dir:alternate;easing:easeInOutCubic;dur:10000;");
              var litosfera_izq = document.getElementById('litosfera_izq');
-             litosfera_izq.setAttribute('animation',
-                                           "property:position;                        from:-80 -10 -35;to:-25 -10 -35;loop:false;                         dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
+             litosfera_izq.setAttribute('animation',"property:position;from:-80 -10 -35;to:-25 -10 -35;loop:false;dir:alternate;easing:easeInOutCubic;dur:10000;");
              var atenosfera = document.getElementById('atenosfera');
-             atenosfera.setAttribute('animation',
-                                           "property:position;                        from:-80 -10 -35;to:-25 -10 -35;loop:false;                         dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
+             atenosfera.setAttribute('animation',"enabled:true;property:position;from:-80 -10 -35;to:-25 -10 -35;loop:false;dir:alternate;easing:easeInOutCubic;dur:10000;");
              var oceano = document.getElementById('oceano');
-             oceano.setAttribute('animation',
-                                           "property:position;                        from:-73 1 -10;                            to:-18 1 -10;loop:false;                  dir:alternate;                         easing:easeInOutCubic;                     dur:10000;");
+             oceano.setAttribute('animation',"property:position;from:-73 1 -10;to:-18 1 -10;loop:false;dir:alternate;easing:easeInOutCubic;dur:10000;");
 
          });
     }
 });    
-/*
 AFRAME.registerComponent('pausar',{
     init: function(){
-         this.el.addEventListener("click",function(e){                
-            
-           (document.getElementById('corteza_oceanica')).setAttribute('enabled',false);
-                        
+         this.el.addEventListener("click",function(e){         
+             
+             var corteza_oceanica = document.getElementById('corteza_oceanica');
+             var litosfera_izq = document.getElementById('litosfera_izq');
+             var atenosfera = document.getElementById('atenosfera');
+             var oceano = document.getElementById('oceano');
+                          
+             var btn = document.getElementById('pau_rea');
+             var prop ='';
+             //recupero posiciones actuales
+             estado_cortezaOceanica = corteza_oceanica.getAttribute('position');
+             estado_atenosfera = atenosfera.getAttribute('position');
+             estado_litosferaIzq = litosfera_izq.getAttribute('position');
+             estado_oceano = oceano.getAttribute('position');
+             //---------------------------
+             var valor = btn.getAttribute('value');
+             
+             if (valor=="Pausar"){
+                btn.setAttribute('value',"Reanudar");    
+                prop = "enabled:false;";       
+              //   console.log(atenosfera.getAttribute('atenosfera',"estado"));
+                pausa = true;
+             }
+             else{
+                 btn.setAttribute('value',"Pausar");
+                 prop = "enabled:true;";
+                 //vuelvo a setear las posiciones anteriores recuperadas            
+                 pause=false;
+                 corteza_oceanica.setAttribute('animation',"from",estado_cortezaOceanica);
+                 litosfera_izq.setAttribute('animation',"from",estado_litosferaIzq);
+                 atenosfera.setAttribute('animation',"from",estado_atenosfera);
+                 oceano.setAttribute('animation',"from",estado_oceano);
+                
+             }          
+             
+             corteza_oceanica.setAttribute('animation',prop);
+             litosfera_izq.setAttribute('animation',prop);
+             atenosfera.setAttribute('animation',prop);
+             oceano.setAttribute('animation',prop);
          });
     }
 }); 
-  */   
+AFRAME.registerComponent('camara_ctrl',{
+    init: function(){
+         this.el.addEventListener("click",function(e){                
+            
+             switch(e.target.id){
+                   case 'subir':
+                        var el = document.getElementById('camara_padre');
+                        var pos = el.getAttribute('position');                       
+                        pos.y=pos.y+5;                     
+                        el.setAttribute('position',pos);
+                    
+                        break;
+                   case 'bajar':
+                        var el = document.getElementById('camara_padre');
+                        var pos = el.getAttribute('position');                       
+                        pos.y=pos.y-5;                     
+                        el.setAttribute('position',pos);
+                        
+                        break;
+                 default: console.log('deafult');  
+             }
+
+         });
+    }
+}); 
+AFRAME.registerComponent('velocidad_ctrl',{
+    init: function(){
+         this.el.addEventListener("click",function(e){      
+             var el = document.getElementById('camara');
+             var acel = el.getAttribute('wasd-controls');  
+             switch(e.target.id){
+                   case 'aumentar':                        
+                        acel.acceleration=acel.acceleration+25;                      
+                        el.setAttribute('wasd-controls',acel);
+                        break;
+                   case 'disminuir':
+                        acel.acceleration=acel.acceleration-25;                     
+                        el.setAttribute('wasd-controls',acel);                       
+                        break;
+                 default: console.log('deafult');  
+             }             document.getElementById('valor_velocidad').setAttribute('value',acel.acceleration); 
+         });
+    }
+}); 
 AFRAME.registerComponent('obj-colisionable',{
     init: function(){       
         //console.log(this.el.getAttribute('id'));
@@ -104,7 +184,7 @@ function modificarCorteza_Oceanica(final){
     var el = document.getElementById('corteza_oceanica');                   
     intervalo_co = setInterval(move,80);
     function move(){        
-        if (final==0){
+        if (final==0 || pausa){
             clearInterval(intervalo_co);
         }
         else{            
@@ -122,12 +202,12 @@ function modificarCorteza_Continental(pto,tope,inc,velocidad){
     var ptoctrlx = 10;
     intervalo_cc = setInterval(move,velocidad);
     function move(){        
-        if (pto==tope){
+        if (pto==tope || pausa){
             clearInterval(intervalo_cc);
         }
         else{            
             pto=pto+inc;
-            x = x+0.50;
+            x = x+0.10; //incremento antiguo 0.50
          //   ptoctrlx = ptoctrlx+1;
             //console.log(pto);
             el.setAttribute('corteza_continental',{p1_ctrl_y:pto,x:x});    
@@ -140,7 +220,7 @@ function modificarLitosfera_Izq(fin,fin_int,x_int,y_int,tope,inc,velocidad){
     
     intervalo_li = setInterval(move,velocidad);
     function move(){
-        if (fin==tope){
+        if (fin==tope || pausa){
             clearInterval(intervalo_li);
             
         }
@@ -161,29 +241,35 @@ function modificarLitosfera_Izq(fin,fin_int,x_int,y_int,tope,inc,velocidad){
     }
 }
 function modificarAtenosfera(p1_ctrl_x,p1_ctrl_y,x_tope,tope_ctrlx,tope_ctrly,inc,velocidad){
-    var el = document.getElementById('atenosfera');
+    var el = document.getElementById('atenosfera');     
     
-    intervalo_at = setInterval(move,velocidad);
+    intervalo_at = setInterval(move,vel);    
     function move(){
-        if (x_tope==14){
+                            
+        if (x_tope==14 || pausa){
+            console.log(intervalo_at);
             clearInterval(intervalo_at);
-            
+            console.log(intervalo_at);
+
         }
         else{
             x_tope=x_tope-inc;   
-             
+
             if (p1_ctrl_x>tope_ctrlx){
                     p1_ctrl_x=p1_ctrl_x-inc;    
                 }
             if (p1_ctrl_y>tope_ctrly){
                 p1_ctrl_y=p1_ctrl_y-inc;                       
-               
+
                 }
-            
-            //console.log(pto);
-            el.setAttribute('atenosfera',{p1_ctrl_x:p1_ctrl_x,p1_ctrl_y:p1_ctrl_y,x_tope:x_tope});
+                //console.log(pto);
+
+                el.setAttribute('atenosfera',{p1_ctrl_x:p1_ctrl_x,p1_ctrl_y:p1_ctrl_y,x_tope:x_tope});
+
         }
+
     }
+
 }
  
 /*AFRAME.regis

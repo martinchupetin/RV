@@ -330,7 +330,8 @@ AFRAME.registerComponent('atenosfera',{
         fin:{type: 'number',default:0},
         x_tope:{type: 'number',default:0},
         p1_ctrl_x: {type: 'number',default:0},
-        p1_ctrl_y: {type: 'number',default:0}
+        p1_ctrl_y: {type: 'number',default:0},
+        estado: {type: 'string',default:'run'}
     },
     init: function(){
         const loader=new THREE.TextureLoader();
@@ -340,11 +341,11 @@ AFRAME.registerComponent('atenosfera',{
        // texture.repeat.set( 10, 10 );
         //var texture = THREE.ImageUtils.loadTexture('assets/montana.jpg');        
         var material = new THREE.MeshPhongMaterial( { color: new THREE.Color(this.data.color), side: THREE.DoubleSide, map:texture } );
-        this.atenosfera = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin,this.data.x_tope,this.data.p1_ctrl_x,this.p1_ctrl_y), material );
+        this.atenosfera = new THREE.Mesh( this.draw(this.data.width,this.data.height,this.data.depth,this.data.x,this.data.y,this.data.fin,this.data.x_tope,this.data.p1_ctrl_x,this.p1_ctrl_y,this.estado), material );
         this.updateOpacity();
         this.el.setObject3D('mesh', this.atenosfera)
          
-    },
+    },  
     updateOpacity: function() {
         if (this.data.opacity < 0) { this.data.opacity = 0; }
         if (this.data.opacity > 1) { this.data.opacity = 1; }
@@ -385,10 +386,11 @@ AFRAME.registerComponent('atenosfera',{
         var nuevaData = this.data;
         var el = this.el;
       //  console.log(viejaData);
-    //    console.log(nuevaData);
         
-        el.getObject3D('mesh').geometry = this.draw(nuevaData.width,nuevaData.height,nuevaData.depth,nuevaData.x,nuevaData.y,nuevaData.fin,nuevaData.x_tope,nuevaData.p1_ctrl_x,nuevaData.p1_ctrl_y);
+       
+        el.getObject3D('mesh').geometry = this.draw(nuevaData.width,nuevaData.height,nuevaData.depth,nuevaData.x,nuevaData.y,nuevaData.fin,nuevaData.x_tope,nuevaData.p1_ctrl_x,nuevaData.p1_ctrl_y,nuevaData.estado);
 
+     
         //en caso de que quiera editar el color y rendereizar al momento
         //el.getObject3D('mesh').material.color = new THREE.Color(data.color);
         //console.log("prueba");

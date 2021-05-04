@@ -7,24 +7,130 @@
       <script src="scripts/aframe-particle-system.min.js"></script>
       <script src="scripts/aframe-event-set-component.js"></script>
       <script src="scripts/acciones.js"></script>
-      <script src="scripts/aframe-extras.min.js"></script>
-      <script src="scripts/aframe-extras.ocean.min.js"></script>
-      <script src="scripts/aframe-physics-system.min.js"></script>      
+    <!-- <script src="scripts/aframe-extras.min.js"></script>
+      <script src="scripts/aframe-extras.ocean.min.js"></script> -->
+      <script src="scripts/aframe-physics-system.min.js"></script>
       <script src="scripts/elementos.js"></script>
       <script src="scripts/colisiones.js"></script>
-     
+      <script src="scripts/aframe-raytrace-component.min.js"></script>
+      <script src="scripts/aframe-line-component.min.js"></script>
+        
 
   <body>    
-    <a-scene physics="gravity:0;">
+   <script id="foo-fs" type="x-shader/x-fragment">
+         precision mediump float;
+      
+      uniform float time;
+      uniform vec3 localCameraPos;
+      varying vec3 localSurfacePos;
+      
+      const float blobsize = 0.2;
+      
+      
+      
+      float smoothBlend( float a, float b, float k ){
+          float h = clamp(0.5+0.5*(b-a)/k,0.0,1.0);
+          return mix(b,a,h) - k*h*(1.0-h);
+      }
+      
+      void hardAdd(inout float curD, float newD){
+        curD = min(curD,newD);
+      }
+      void smoothAdd(inout float curD, float newD, float blendPower){
+          curD = smoothBlend( newD, curD, blendPower );
+      }
+      
+      
+      float obj_ball(vec3 p, vec3 center, float radius){
+          return length(p-center)-radius;
+      }
+      
+      vec3 blobBallPos(float i){
+          
+          float v = time/1000.0*2.0 + i*100.0;
+          return vec3(
+            sin( v + sin(v*0.8) + sin(v*0.2)*sin(v*2.1) )*blobsize,
+            sin( v + sin(v*0.6) + sin(v*0.4)*sin(v*2.2) )*blobsize,
+            sin( v + sin(v*0.4) + sin(v*0.6)*sin(v*2.3) )*blobsize
+          );
+          
+      }
+      
+      float room(vec3 p){
+        
+        float distance = 9999.9;
+        
+        hardAdd(distance, obj_ball(p, blobBallPos(0.0), blobsize) );
+        for(float i=1.0; i<8.0; i+=1.0){
+          smoothAdd(distance, obj_ball(p, blobBallPos(i), blobsize) , blobsize);
+        }
+        
+        return distance;
+        
+      }
+      
+      
+      void main() {
+        
+        
+        vec3 curCameraRayUnit = normalize(localSurfacePos - localCameraPos);
+        
+        
+        // zero optimization done to step size, max iterations, etc..!
+        const vec3 e=vec3(0.02,0,0);
+        const float maxd=40.0; //Max depth
+        vec3 c,p,N;
+        float sA,sP;
+        
+        // march to bg
+        vec3 color=vec3(0.912,0.673,0.130);
+        float f=0.0;
+        float d=0.001;
+        vec3 surfaceColor;
+        for(int i=0;i<64;i++){
+          if ((abs(d) < .001) || (f > maxd)) break;
+          f+=d;
+          p=localCameraPos+curCameraRayUnit*f;
+          d = room(p);
+        }
+        
+        float specA=1.0, specP=8.0;
+        
+        if (f < maxd){
+          
+          vec3 n = vec3(d-room(p-e.xyy),
+                  d-room(p-e.yxy),
+                  d-room(p-e.yyx));
+          N = normalize(n);
+          
+          vec3 L = normalize(vec3(1.0,1.0,1.0)-p);
+          
+          float diffuse=max(dot(N,L),0.0);
+          vec3 H = normalize(L-curCameraRayUnit);
+          float specular = max(dot(H,N),0.0);
+          color = (diffuse*0.8+0.2)*vec3(0.912,0.673,0.130) + pow(specular,specP)*specA;
+          
+        } else {
+          
+          discard;
+          
+        }
+        
+        gl_FragColor = vec4(color,1.0);
+        
+      }
+      
 
+  </script>
+    <a-scene physics="gravity:0;">
      <a-assets>
 
         <a-asset-item id="volcan" src="3d/aucanquilcha_antofagasta_chile/scene.gltf"></a-asset-item>
         
 
      </a-assets>
- <a-entity position="100 1.25 0" particle-system="preset: colors;blending:4;size:2;type:3;color:#ffb405;"></a-entity>
-    <a-entity progressive-controls></a-entity>
+    <!-- <a-entity position="100 1.25 0" particle-system="preset:         colors;blending:4;size:2;type:3;color:#ffb405;"></a-entity> -->
+     <a-entity progressive-controls></a-entity> 
      <a-sky color="black"></a-sky>
       
       <!-- COMENZAR-->
@@ -52,17 +158,18 @@
        
       </a-entity>
       <!-- Definicion de la camara y el curso para interactuar-->
-        <a-entity position="-25 5 120">
+        <a-entity id="camara_padre" position="-25 5 120">
             <a-camera id="camara" wasd-controls="acceleration:0;" easing="30">
                 <a-cursor geometry="primitive: sphere; radius:0.02"
                           material="color: white; shader: flat; opacity: 0.5"             
                 ></a-cursor>
+                
             </a-camera>
         </a-entity>
       <!-- FIN - COMENZAR-->
           
         <!--OBJETOS -->
-        <a-entity id="atenosfera" atenosfera="width:8;height:2;depth:50;x:-15;y:7;fin:0;x_tope:23;p1_ctrl_x:14;p1_ctrl_y:7;" position="-80 -10 -35" 
+        <a-entity id="atenosfera" atenosfera="width:8;height:2;depth:50;x:-15;y:7;fin:0;x_tope:23;p1_ctrl_x:14;p1_ctrl_y:7;estado:run;" position="-80 -10 -35" 
                   animation="" 
                   colision="debug:false;objects:
                   #corteza_continental;"
@@ -90,7 +197,7 @@
         </a-entity>
         <a-entity litosfera_der="width:8;height:2;depth:50;x:-15.5;y:7;fin:0;opacity:0.8;color:#D1C7AC;" position="-1 -9.98 -35" >            
         </a-entity>
-        <a-entity id="corteza_continental" corteza_continental="width:8;height:2;depth:50;x:-23;y:9.2;fin:9.2;p1_ctrl_x:10;p1_ctrl_y:15;p2_ctrl_x:20;p2_ctrl_y:11;opacity:1;"     
+        <a-entity id="corteza_continental" corteza_continental="width:8;height:2;depth:50;x:-23;y:9.2;fin:9.2;p1_ctrl_x:10;p1_ctrl_y:15;p2_ctrl_x:-20;p2_ctrl_y:11;opacity:1;"     
         position="-1 -10.03 -35">
         
         </a-entity>
@@ -103,16 +210,40 @@
            
        </a-box>
        <a-entity position="-25 -10 22" scale="2 2 2">
-            <a-plane id="boton1" position="-5 0 0" color="red" opacity="0.4" scale="4 2 1" rotation="-45 0 0" inicio> 
+        <!--    <a-plane id="boton1" position="-5 0 0" color="red" opacity="0.4" scale="4 2 1" rotation="-45 0 0" inicio> 
                 <a-text value="Iniciar" position="0 0 0.2" width="7" align="center"
                 event-set__tarcol="_event: click; _target: #boton1;"
                ></a-text>         
-            </a-plane>    
-            <a-plane id="boton2" position="0 0 0" color="red" opacity="0.4" scale="4 2 1" rotation="-45 0 0"> 
-                <a-text value="Pausar" position="0 0 0.2" width="7" align="center"
+            </a-plane>    -->
+        <!--    <a-plane id="boton2" position="0 0 0" color="red" opacity="0.4" scale="4 2 1" rotation="-45 0 0" pausar> 
+                <a-text id='pau_rea' value="Pausar" position="0 0 0.2" width="7" align="center"
                 event-set__tarcol="_event: click; _target: #boton2;"
                ></a-text>         
-            </a-plane>    
+            </a-plane> -->
+            <a-box id="boton1" position="-5 0 0" color="red" opacity="0.4" scale="4 2 1" rotation="0 0 0" side="double" inicio> 
+                <a-text value="Iniciar" position="0 0 0.2" width="7" align="center" side="double"
+                event-set__tarcol="_event: click; _target: #boton1;"
+               ></a-text>         
+            </a-box>  
+            <a-box id="boton2" position="0 0 0" color="red" opacity="0.4" scale="4 2 1" rotation="0 0 0" side="double" pausar> 
+                <a-text id='pau_rea' value="Pausar" position="0 0 0.2" width="7" align="center" side="double"
+                event-set__tarcol="_event: click; _target: #boton2;"
+               ></a-text>         
+            </a-box>
+       </a-entity>
+       <a-entity id="botonera1" position="50 20 22" scale="1 1 1">
+           <a-text value="Perspectiva" position="5 2 0" scale="6 6 6" align="center" side="double" color="White;"
+               ></a-text>
+           <a-triangle id="subir" position="5 0 0" rotation="0 0 0" color="yellow" depth="3" scale="2 2 1" side="double" camara_ctrl></a-triangle>
+           <a-triangle id="bajar" position="5 -3 0" rotation="0 0 180" color="yellow" scale="2 2 1" side="double" camara_ctrl></a-triangle>
+       </a-entity>
+       <a-entity id="control_velocidad" position="50 10 22" scale="1 1 1">
+           <a-text value="Velocidad" position="5 2 0" scale="6 6 6" align="center" side="double"
+               ></a-text>
+           <a-triangle id="aumentar" position="5 0 0" rotation="0 0 0" color="blue" depth="3" scale="2 2 1" side="double" velocidad_ctrl></a-triangle>
+           <a-triangle id="disminuir" position="5 -3 0" rotation="0 0 180" color="blue" scale="2 2 1" side="double" velocidad_ctrl></a-triangle>
+           <a-text id="valor_velocidad" value="200" position="8 -1 0" scale="6 6 6" align="center" side="double" color="grey;"
+               ></a-text>
        </a-entity>
        
      <!--   <a-ocean id="agua2" color="#4486B9" depth="50" width="10" opacity="0.7" position="-80 1 -10" scale="3 1 6" animation=""></a-ocean> -->
@@ -122,7 +253,18 @@
         </a-entity>
 
       <!--  <a-entity gltf-model="#volcan" position="10 2 -25" scale="0.5 1 1" rotation="0 0 0"></a-entity> -->
-    
+       
+       <!-- Definicion del magma con raycaster-->
+        <a-entity position="-20 -12 22" scale="2 2 2">
+            <a-box position="10 2 -12" scale="3 3 3" raytrace="shader:#foo-fs"></a-box>   
+            <a-box position="11 2 -12" scale="3 3 3" raytrace="shader:#foo-fs"></a-box>   
+        </a-entity>
+        
+        <!-- A PARTIR DE ACA AGREGO LAS LEYENDAS-->
+        <a-entity position="-37 15 -10" scale="2 2 2">
+             <a-entity line="start: 8 -1 0; end: 8 -8 0; color: #ff0"></a-entity>
+             <a-text id="texto1" value="Fosa Oceánica" position="8 0 0" scale="6 6 6" align="center" side="double"></a-text>
+        </a-entity>
         
         <a-entity light="type: ambient">
             
