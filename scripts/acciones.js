@@ -7,7 +7,7 @@ var estado_atenosfera;
 var estado_litosferaIzq;
 var estado_oceano;
 var pausa=false;
-var vel=80;
+var fin_desplazamiento = 0;
 
 AFRAME.registerComponent('seleccion-opcion',{
             init: function(){
@@ -145,7 +145,7 @@ AFRAME.registerComponent('obj-colisionable',{
                    case 'corteza_oceanica':
                         var el_co = document.getElementById('corteza_oceanica');
                         var final_co = el_co.getAttribute('corteza_oceanica').fin;
-                        modificarCorteza_Oceanica(final_co);  
+                        modificarCorteza_Oceanica(final_co,80);  
                         break;
                     case 'litosfera_izq':    
                         var el_li = document.getElementById('litosfera_izq');
@@ -166,11 +166,13 @@ AFRAME.registerComponent('obj-colisionable',{
                         break;
                     default:
                         console.log('deafult');
-                   }
+            }
+                    
             
         });
+      
         this.el.addEventListener("hitend",function(e){
-            //console.log(e);    
+            console.log("termino???");    
         });
         this.el.addEventListener("hitclosest",function(e){
             
@@ -180,12 +182,14 @@ AFRAME.registerComponent('obj-colisionable',{
     }
    
 });  
-function modificarCorteza_Oceanica(final){
+function modificarCorteza_Oceanica(final,velocidad){
     var el = document.getElementById('corteza_oceanica');                   
-    intervalo_co = setInterval(move,80);
+    intervalo_co = setInterval(move,velocidad);
     function move(){        
         if (final==0 || pausa){
             clearInterval(intervalo_co);
+            fin_desplazamiento+=1;
+            finDesplazamiento();
         }
         else{            
             final=final-0.25;         
@@ -204,6 +208,8 @@ function modificarCorteza_Continental(pto,tope,inc,velocidad){
     function move(){        
         if (pto==tope || pausa){
             clearInterval(intervalo_cc);
+            fin_desplazamiento+=1;
+            finDesplazamiento();
         }
         else{            
             pto=pto+inc;
@@ -222,7 +228,8 @@ function modificarLitosfera_Izq(fin,fin_int,x_int,y_int,tope,inc,velocidad){
     function move(){
         if (fin==tope || pausa){
             clearInterval(intervalo_li);
-            
+            fin_desplazamiento+=1;
+            finDesplazamiento();
         }
         else{
             fin=fin-inc;
@@ -243,13 +250,15 @@ function modificarLitosfera_Izq(fin,fin_int,x_int,y_int,tope,inc,velocidad){
 function modificarAtenosfera(p1_ctrl_x,p1_ctrl_y,x_tope,tope_ctrlx,tope_ctrly,inc,velocidad){
     var el = document.getElementById('atenosfera');     
     
-    intervalo_at = setInterval(move,vel);    
+    intervalo_at = setInterval(move,velocidad);    
     function move(){
                             
         if (x_tope==14 || pausa){
-            console.log(intervalo_at);
+           // console.log(intervalo_at);
             clearInterval(intervalo_at);
-            console.log(intervalo_at);
+            fin_desplazamiento+=1;
+            finDesplazamiento();
+          //console.log(intervalo_at);
 
         }
         else{
@@ -271,16 +280,27 @@ function modificarAtenosfera(p1_ctrl_x,p1_ctrl_y,x_tope,tope_ctrlx,tope_ctrly,in
     }
 
 }
- 
-/*AFRAME.regis
-/*AFRAME.registerComponent('volver',{
-    init: function(){
-         this.el.addEventListener("click",function(e){                
-     		console.log("emntraaa");
-            window.location.href='ppal.html';
-         });
+function finDesplazamiento(){
+    switch (fin_desplazamiento){
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+                document.getElementById('leyenda1').setAttribute('visible',true);
+            break;
+        case 4:
+                console.log("fin desplazamiento");
+                document.getElementById('leyenda2').setAttribute('visible',true);
+                document.getElementById('magma').setAttribute('visible',true);
+                document.getElementById('erupcion').setAttribute('visible',true);
+            break;
+        default:
+            
     }
-});*/    
+
+} 
+ 
 /*AFRAME.registerComponent('planeta',{
     init: function(){
          this.el.addEventListener("click",function(e){            

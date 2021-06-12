@@ -13,7 +13,7 @@
       <script src="scripts/elementos.js"></script>
       <script src="scripts/colisiones.js"></script>
       <script src="scripts/aframe-raytrace-component.min.js"></script>
-      <script src="scripts/aframe-line-component.min.js"></script>
+   <!--   <script src="scripts/aframe-line-component.min.js"></script> -->
         
 
   <body>    
@@ -129,7 +129,7 @@
         
 
      </a-assets>
-    <!-- <a-entity position="100 1.25 0" particle-system="preset:         colors;blending:4;size:2;type:3;color:#ffb405;"></a-entity> -->
+   
      <a-entity progressive-controls></a-entity> 
      <a-sky color="black"></a-sky>
       
@@ -169,14 +169,14 @@
       <!-- FIN - COMENZAR-->
           
         <!--OBJETOS -->
-        <a-entity id="atenosfera" atenosfera="width:8;height:2;depth:50;x:-15;y:7;fin:0;x_tope:23;p1_ctrl_x:14;p1_ctrl_y:7;estado:run;" position="-80 -10 -35" 
+        <a-entity id="atenosfera" atenosfera="width:8;height:2;depth:50;x:-25;y:7;fin:0;x_tope:23;p1_ctrl_x:14;p1_ctrl_y:7;estado:run;" position="-80 -10 -35" 
                   animation="" 
                   colision="debug:false;objects:
                   #corteza_continental;"
                  >
                        
         </a-entity>
-        <a-entity id="litosfera_izq" litosfera_izq="width:8;height:2;depth:50;x:-15;y:10;fin:10;fin_int:23;x_int:23;y_int:7;p1_ctrl_x:5;p1_ctrl_y:10;opacity:0.7;color:#D8BFD8;" position="-80 -10 -35"
+        <a-entity id="litosfera_izq" litosfera_izq="width:8;height:2;depth:50;x:-25;y:10;fin:10;fin_int:23;x_int:23;y_int:7;p1_ctrl_x:5;p1_ctrl_y:10;opacity:0.7;color:#D8BFD8;" position="-80 -10 -35"
                   animation=""
                   colision="debug:false;objects:
                   #corteza_continental;"
@@ -184,7 +184,7 @@
                   >
             
         </a-entity>
-        <a-entity id="corteza_oceanica" corteza_oceanica="width:8;height:2;depth:50;x:-15;y:11;fin:10;opacity:0.5;color:#0B2367;" position="-80 -10 -35"
+        <a-entity id="corteza_oceanica" corteza_oceanica="width:8;height:2;depth:50;x:-25;y:11;fin:10;opacity:0.5;color:#0B2367;" position="-80 -10 -35"
                   animation=""
                   colision="debug:false;objects: 
                   #corteza_continental"                        
@@ -255,17 +255,28 @@
       <!--  <a-entity gltf-model="#volcan" position="10 2 -25" scale="0.5 1 1" rotation="0 0 0"></a-entity> -->
        
        <!-- Definicion del magma con raycaster-->
-        <a-entity position="-22 -12 22" scale="2 2 2">
+        <a-entity id="magma" position="-22 -12 22" scale="2 2 2" visible="false">
             <a-box position="10 2 -12" scale="3 3 3" raytrace="shader:#foo-fs"></a-box>   
             <a-box position="11 2 -12" scale="3 3 3" raytrace="shader:#foo-fs"></a-box>   
         </a-entity>
         
         <!-- A PARTIR DE ACA AGREGO LAS LEYENDAS-->
-        <a-entity position="-37 15 -10" scale="2 2 2">
+        <a-entity id="leyenda1" position="-37 15 -10" scale="2 2 2" visible="false">
              <a-entity line="start: 8 -1 0; end: 8 -8 0; color: #ff0"></a-entity>
              <a-text id="texto1" value="Fosa Oceánica" position="8 0 0" scale="6 6 6" align="center" side="double"></a-text>
         </a-entity>
+        <a-entity id="leyenda2" position="-10 35 -10" scale="2 2 2" visible="false">
+             <a-entity line="start: 8 -1 0; end: 5 -11 0; color: #ff0"></a-entity>
+             <a-text id="texto2" value="Arco Volcanico" position="8 0 0" scale="6 6 6" align="center" side="double"></a-text>
+        </a-entity>
         
+        <!-- Tengo que trabajar una especie de erupcion-->
+         <a-entity id="erupcion" position="-4 12 0"  visible="false">
+              <a-entity position="0 0 0" particle-system="preset:colors;blending:1;size:2;type:3;color:#f2f217,#ff6600;
+              texture:./assets/shockwave.png;velocityValue:0 20 0;accelerationSpread:10 0 10;particleCount:500">
+              </a-entity>           
+         </a-entity>
+          
         <a-entity light="type: ambient">
             
         </a-entity>
